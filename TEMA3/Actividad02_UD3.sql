@@ -1,3 +1,4 @@
+SET SQL_SAFE_UPDATES = 0;
 DROP DATABASE IF EXISTS empleados;
 CREATE DATABASE IF NOT EXISTS empleados;
 USE empleados;
@@ -72,18 +73,70 @@ INSERT INTO `dept_emp` VALUES (10001,'d006','2021-06-26','9999-01-01'),
 (10011,'d005','2018-01-22','2019-09-10'),
 (10012,'d005','2019-06-26','9999-01-01');
 
-/*PARTE 1*/
+/*PARTE 1: MODIFICACIONES*/
+
 /*Ejercicio 1: Mary Sluis ha cambiado su nombre a Helen, actualízalo en la base de datos.*/
 UPDATE empleado
 SET nombre = 'Helen'
 WHERE cod_empleado = 10011;
 
+SELECT * FROM empleado WHERE cod_empleado = 10011; /*Para ver los cambios*/
+
 /*Ejercicio 2: Por razones desconocidas, la empresa desea que la fecha actual en la tabla "dept_emp". 
 ya no sea '9999-01-01' y que se cambie a '9999-02-02'. Ejecutar una actualización que 
-realice este cambio en TODAS las filas de la tabla "dept_emp".*/
+realice este cambio en TODAS las filas de la tabla "dept_emp".*/ 
+UPDATE dept_emp
+SET fecha_hasta = '9999-02-02';
+SELECT * FROM dept_emp;/*Para ver los cambios*/
 
 /*Ejercicio 3: El departamento de TI está un poco bajo de recursos. Crea 2 nuevos empleados y 
 añádelos a este departamento. */
+INSERT INTO `empleado` VALUES 
+(10013,'1964-06-02','Bezalel','Andrea','F','2018-11-21'),
+(10014,'1964-06-02','Bezalel','Cristina','F','2018-11-21');
+
+INSERT INTO `dept_emp` VALUES 
+(10013,'d010','2021-06-26','9999-02-02'),
+(10014,'d010','2021-06-26','9999-02-02');
+
+SELECT * FROM empleado WHERE cod_empleado >= 10013;/*Para ver los cambios*/
 
 /*Ejercicio 4: Cambiar el nombre del departamento de TI a "Equipo de Titanes Digitales".*/
+UPDATE departamento
+SET nombre_departamento = 'Equipo_de_Titanes_Digitales'
+WHERE nombre_departamento = 'IT';
 
+
+/*PARTE 2: CONSULTAS */
+
+/*Ejercicio 1: Mostrar todos los datos de la tabla "departamento". */
+SELECT * 
+FROM departamento;
+
+/*Ejercicio 2: Mostrar solo los nombres de los departamentos de la tabla "departamento". */
+SELECT nombre_departamento 
+FROM departamento;
+
+/*Ejercicio 3: Mostrar el nombre, apellido y fecha de nacimiento de los empleados nacidos a partir de '1990-04-20', incluidos los nacidos ese mismo día.*/
+SELECT nombre, apellido, fecha_nacimiento
+FROM empleado
+WHERE fecha_nacimiento >= '1990-04-20';
+
+/*Ejercicio 4: Mostrar el nombre, apellido y fecha de nacimiento de los empleados nacidos en la década de 1980. */
+SELECT nombre, apellido, fecha_nacimiento
+FROM empleado
+WHERE fecha_nacimiento > '1980-01-01'
+AND fecha_nacimiento < '1990-01-01'
+AND sexo = 'M';
+
+/*Ejercicio 5: Mostrar el nombre, apellido y fecha de nacimiento de las empleadas nacidas en las décadas de 1980 y 1990. */
+SELECT nombre, apellido, fecha_nacimiento
+FROM empleado
+WHERE fecha_nacimiento > '1980-01-01'
+AND fecha_nacimiento < '2000-01-01'
+AND sexo = 'F';
+
+/*Ejercicio 6: Mostrar el apellido y el nombre (en ese orden) de todos los empleados cuyo apellido comience con 'P'. */
+SELECT apellido, nombre
+FROM empleado
+WHERE apellido LIKE 'P%';
