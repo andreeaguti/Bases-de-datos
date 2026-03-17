@@ -1,0 +1,2458 @@
+<!DOCTYPE html>
+
+<html  dir="ltr" lang="es" xml:lang="es">
+<head>
+    <title>DAW1BD: Actividad 4. Modificaciones y consultas en SQL | Decroly</title>
+    <link rel="shortcut icon" href="//auladecroly.com/pluginfile.php/2/theme_proeducaboost/favicon/1772697746/faviconV2.ico" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="moodle, DAW1BD: Actividad 4. Modificaciones y consultas en SQL | Decroly" />
+<link rel="stylesheet" type="text/css" href="https://auladecroly.com/theme/yui_combo.php?rollup/3.17.2/yui-moodlesimple-min.css" /><script id="firstthemesheet" type="text/css">/** Required in order to fix style inclusion problems in IE with YUI **/</script><link rel="stylesheet" type="text/css" href="https://auladecroly.com/theme/styles.php/proeducaboost/1772697746_1770883695/all" />
+<script>
+//<![CDATA[
+var M = {}; M.yui = {};
+M.pageloadstarttime = new Date();
+M.cfg = {"wwwroot":"https:\/\/auladecroly.com","homeurl":{},"sesskey":"Txoy1D5evj","sessiontimeout":"28800","sessiontimeoutwarning":"1200","themerev":"1772697746","slasharguments":1,"theme":"proeducaboost","iconsystemmodule":"core\/icon_system_fontawesome","jsrev":-1,"admin":"admin","svgicons":true,"usertimezone":"Europa\/Berl\u00edn","language":"es","courseId":219,"courseContextId":16283,"contextid":55799,"contextInstanceId":43253,"langrev":1773630248,"templaterev":"1772697746"};var yui1ConfigFn = function(me) {if(/-skin|reset|fonts|grids|base/.test(me.name)){me.type='css';me.path=me.path.replace(/\.js/,'.css');me.path=me.path.replace(/\/yui2-skin/,'/assets/skins/sam/yui2-skin')}};
+var yui2ConfigFn = function(me) {var parts=me.name.replace(/^moodle-/,'').split('-'),component=parts.shift(),module=parts[0],min='-min';if(/-(skin|core)$/.test(me.name)){parts.pop();me.type='css';min=''}
+if(module){var filename=parts.join('-');me.path=component+'/'+module+'/'+filename+min+'.'+me.type}else{me.path=component+'/'+component+'.'+me.type}};
+YUI_config = {"debug":false,"base":"https:\/\/auladecroly.com\/lib\/yuilib\/3.17.2\/","comboBase":"https:\/\/auladecroly.com\/theme\/yui_combo.php?","combine":true,"filter":null,"insertBefore":"firstthemesheet","groups":{"yui2":{"base":"https:\/\/auladecroly.com\/lib\/yuilib\/2in3\/2.9.0\/build\/","comboBase":"https:\/\/auladecroly.com\/theme\/yui_combo.php?","combine":true,"ext":false,"root":"2in3\/2.9.0\/build\/","patterns":{"yui2-":{"group":"yui2","configFn":yui1ConfigFn}}},"moodle":{"name":"moodle","base":"https:\/\/auladecroly.com\/theme\/yui_combo.php?m\/-1\/","combine":true,"comboBase":"https:\/\/auladecroly.com\/theme\/yui_combo.php?","ext":false,"root":"m\/-1\/","patterns":{"moodle-":{"group":"moodle","configFn":yui2ConfigFn}},"filter":null,"modules":{"moodle-core-maintenancemodetimer":{"requires":["base","node"]},"moodle-core-event":{"requires":["event-custom"]},"moodle-core-dragdrop":{"requires":["base","node","io","dom","dd","event-key","event-focus","moodle-core-notification"]},"moodle-core-languninstallconfirm":{"requires":["base","node","moodle-core-notification-confirm","moodle-core-notification-alert"]},"moodle-core-blocks":{"requires":["base","node","io","dom","dd","dd-scroll","moodle-core-dragdrop","moodle-core-notification"]},"moodle-core-tooltip":{"requires":["base","node","io-base","moodle-core-notification-dialogue","json-parse","widget-position","widget-position-align","event-outside","cache-base"]},"moodle-core-chooserdialogue":{"requires":["base","panel","moodle-core-notification"]},"moodle-core-popuphelp":{"requires":["moodle-core-tooltip"]},"moodle-core-lockscroll":{"requires":["plugin","base-build"]},"moodle-core-formchangechecker":{"requires":["base","event-focus","moodle-core-event"]},"moodle-core-handlebars":{"condition":{"trigger":"handlebars","when":"after"}},"moodle-core-actionmenu":{"requires":["base","event","node-event-simulate"]},"moodle-core-notification":{"requires":["moodle-core-notification-dialogue","moodle-core-notification-alert","moodle-core-notification-confirm","moodle-core-notification-exception","moodle-core-notification-ajaxexception"]},"moodle-core-notification-dialogue":{"requires":["base","node","panel","escape","event-key","dd-plugin","moodle-core-widget-focusafterclose","moodle-core-lockscroll"]},"moodle-core-notification-alert":{"requires":["moodle-core-notification-dialogue"]},"moodle-core-notification-confirm":{"requires":["moodle-core-notification-dialogue"]},"moodle-core-notification-exception":{"requires":["moodle-core-notification-dialogue"]},"moodle-core-notification-ajaxexception":{"requires":["moodle-core-notification-dialogue"]},"moodle-core_availability-form":{"requires":["base","node","event","event-delegate","panel","moodle-core-notification-dialogue","json"]},"moodle-backup-confirmcancel":{"requires":["node","node-event-simulate","moodle-core-notification-confirm"]},"moodle-backup-backupselectall":{"requires":["node","event","node-event-simulate","anim"]},"moodle-course-dragdrop":{"requires":["base","node","io","dom","dd","dd-scroll","moodle-core-dragdrop","moodle-core-notification","moodle-course-coursebase","moodle-course-util"]},"moodle-course-categoryexpander":{"requires":["node","event-key"]},"moodle-course-management":{"requires":["base","node","io-base","moodle-core-notification-exception","json-parse","dd-constrain","dd-proxy","dd-drop","dd-delegate","node-event-delegate"]},"moodle-course-util":{"requires":["node"],"use":["moodle-course-util-base"],"submodules":{"moodle-course-util-base":{},"moodle-course-util-section":{"requires":["node","moodle-course-util-base"]},"moodle-course-util-cm":{"requires":["node","moodle-course-util-base"]}}},"moodle-form-shortforms":{"requires":["node","base","selector-css3","moodle-core-event"]},"moodle-form-dateselector":{"requires":["base","node","overlay","calendar"]},"moodle-form-passwordunmask":{"requires":[]},"moodle-question-preview":{"requires":["base","dom","event-delegate","event-key","core_question_engine"]},"moodle-question-chooser":{"requires":["moodle-core-chooserdialogue"]},"moodle-question-searchform":{"requires":["base","node"]},"moodle-availability_completion-form":{"requires":["base","node","event","moodle-core_availability-form"]},"moodle-availability_date-form":{"requires":["base","node","event","io","moodle-core_availability-form"]},"moodle-availability_grade-form":{"requires":["base","node","event","moodle-core_availability-form"]},"moodle-availability_group-form":{"requires":["base","node","event","moodle-core_availability-form"]},"moodle-availability_grouping-form":{"requires":["base","node","event","moodle-core_availability-form"]},"moodle-availability_profile-form":{"requires":["base","node","event","moodle-core_availability-form"]},"moodle-mod_assign-history":{"requires":["node","transition"]},"moodle-mod_attendance-groupfilter":{"requires":["base","node"]},"moodle-mod_quiz-questionchooser":{"requires":["moodle-core-chooserdialogue","moodle-mod_quiz-util","querystring-parse"]},"moodle-mod_quiz-dragdrop":{"requires":["base","node","io","dom","dd","dd-scroll","moodle-core-dragdrop","moodle-core-notification","moodle-mod_quiz-quizbase","moodle-mod_quiz-util-base","moodle-mod_quiz-util-page","moodle-mod_quiz-util-slot","moodle-course-util"]},"moodle-mod_quiz-autosave":{"requires":["base","node","event","event-valuechange","node-event-delegate","io-form"]},"moodle-mod_quiz-quizbase":{"requires":["base","node"]},"moodle-mod_quiz-modform":{"requires":["base","node","event"]},"moodle-mod_quiz-toolboxes":{"requires":["base","node","event","event-key","io","moodle-mod_quiz-quizbase","moodle-mod_quiz-util-slot","moodle-core-notification-ajaxexception"]},"moodle-mod_quiz-util":{"requires":["node","moodle-core-actionmenu"],"use":["moodle-mod_quiz-util-base"],"submodules":{"moodle-mod_quiz-util-base":{},"moodle-mod_quiz-util-slot":{"requires":["node","moodle-mod_quiz-util-base"]},"moodle-mod_quiz-util-page":{"requires":["node","moodle-mod_quiz-util-base"]}}},"moodle-mod_scheduler-saveseen":{"requires":["base","node","event"]},"moodle-mod_scheduler-studentlist":{"requires":["base","node","event","io"]},"moodle-mod_scheduler-delselected":{"requires":["base","node","event"]},"moodle-message_airnotifier-toolboxes":{"requires":["base","node","io"]},"moodle-filter_glossary-autolinker":{"requires":["base","node","io-base","json-parse","event-delegate","overlay","moodle-core-event","moodle-core-notification-alert","moodle-core-notification-exception","moodle-core-notification-ajaxexception"]},"moodle-filter_mathjaxloader-loader":{"requires":["moodle-core-event"]},"moodle-editor_atto-rangy":{"requires":[]},"moodle-editor_atto-editor":{"requires":["node","transition","io","overlay","escape","event","event-simulate","event-custom","node-event-html5","node-event-simulate","yui-throttle","moodle-core-notification-dialogue","moodle-core-notification-confirm","moodle-editor_atto-rangy","handlebars","timers","querystring-stringify"]},"moodle-editor_atto-plugin":{"requires":["node","base","escape","event","event-outside","handlebars","event-custom","timers","moodle-editor_atto-menu"]},"moodle-editor_atto-menu":{"requires":["moodle-core-notification-dialogue","node","event","event-custom"]},"moodle-report_eventlist-eventfilter":{"requires":["base","event","node","node-event-delegate","datatable","autocomplete","autocomplete-filters"]},"moodle-report_loglive-fetchlogs":{"requires":["base","event","node","io","node-event-delegate"]},"moodle-gradereport_history-userselector":{"requires":["escape","event-delegate","event-key","handlebars","io-base","json-parse","moodle-core-notification-dialogue"]},"moodle-qbank_editquestion-chooser":{"requires":["moodle-core-chooserdialogue"]},"moodle-tool_capability-search":{"requires":["base","node"]},"moodle-tool_lp-dragdrop-reorder":{"requires":["moodle-core-dragdrop"]},"moodle-tool_monitor-dropdown":{"requires":["base","event","node"]},"moodle-assignfeedback_editpdf-editor":{"requires":["base","event","node","io","graphics","json","event-move","event-resize","transition","querystring-stringify-simple","moodle-core-notification-dialog","moodle-core-notification-alert","moodle-core-notification-warning","moodle-core-notification-exception","moodle-core-notification-ajaxexception"]},"moodle-atto_accessibilitychecker-button":{"requires":["color-base","moodle-editor_atto-plugin"]},"moodle-atto_accessibilityhelper-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_align-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_bold-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_charmap-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_clear-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_collapse-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_emojipicker-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_emoticon-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_equation-button":{"requires":["moodle-editor_atto-plugin","moodle-core-event","io","event-valuechange","tabview","array-extras"]},"moodle-atto_h5p-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_html-button":{"requires":["promise","moodle-editor_atto-plugin","moodle-atto_html-beautify","moodle-atto_html-codemirror","event-valuechange"]},"moodle-atto_html-codemirror":{"requires":["moodle-atto_html-codemirror-skin"]},"moodle-atto_html-beautify":{},"moodle-atto_image-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_indent-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_italic-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_link-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_managefiles-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_managefiles-usedfiles":{"requires":["node","escape"]},"moodle-atto_media-button":{"requires":["moodle-editor_atto-plugin","moodle-form-shortforms"]},"moodle-atto_noautolink-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_orderedlist-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_panoptobutton-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_recordrtc-button":{"requires":["moodle-editor_atto-plugin","moodle-atto_recordrtc-recording"]},"moodle-atto_recordrtc-recording":{"requires":["moodle-atto_recordrtc-button"]},"moodle-atto_rtl-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_strike-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_subscript-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_superscript-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_table-button":{"requires":["moodle-editor_atto-plugin","moodle-editor_atto-menu","event","event-valuechange"]},"moodle-atto_title-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_underline-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_undo-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_unorderedlist-button":{"requires":["moodle-editor_atto-plugin"]}}},"gallery":{"name":"gallery","base":"https:\/\/auladecroly.com\/lib\/yuilib\/gallery\/","combine":true,"comboBase":"https:\/\/auladecroly.com\/theme\/yui_combo.php?","ext":false,"root":"gallery\/-1\/","patterns":{"gallery-":{"group":"gallery"}}}},"modules":{"core_filepicker":{"name":"core_filepicker","fullpath":"https:\/\/auladecroly.com\/lib\/javascript.php\/-1\/repository\/filepicker.js","requires":["base","node","node-event-simulate","json","async-queue","io-base","io-upload-iframe","io-form","yui2-treeview","panel","cookie","datatable","datatable-sort","resize-plugin","dd-plugin","escape","moodle-core_filepicker","moodle-core-notification-dialogue"]},"core_comment":{"name":"core_comment","fullpath":"https:\/\/auladecroly.com\/lib\/javascript.php\/-1\/comment\/comment.js","requires":["base","io-base","node","json","yui2-animation","overlay","escape"]},"mathjax":{"name":"mathjax","fullpath":"https:\/\/cdn.jsdelivr.net\/npm\/mathjax@2.7.9\/MathJax.js?delayStartupUntil=configured"},"mod_assign":{"name":"mod_assign","fullpath":"https:\/\/auladecroly.com\/lib\/javascript.php\/-1\/mod\/assign\/module.js","requires":[]}}};
+M.yui.loader = {modules: {}};
+
+//]]>
+</script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>(window.BOOMR_mq=window.BOOMR_mq||[]).push(["addVar",{"rua.upush":"false","rua.cpush":"false","rua.upre":"false","rua.cpre":"false","rua.uprl":"false","rua.cprl":"false","rua.cprf":"false","rua.trans":"","rua.cook":"false","rua.ims":"false","rua.ufprl":"false","rua.cfprl":"false","rua.isuxp":"false","rua.texp":"norulematch","rua.ceh":"false","rua.ueh":"false","rua.ieh.st":"0"}]);</script>
+                              <script>!function(e){var n="https://s.go-mpulse.net/boomerang/";if("False"=="True")e.BOOMR_config=e.BOOMR_config||{},e.BOOMR_config.PageParams=e.BOOMR_config.PageParams||{},e.BOOMR_config.PageParams.pci=!0,n="https://s2.go-mpulse.net/boomerang/";if(window.BOOMR_API_key="49VLA-CFTHA-CGTWE-8Y5XU-3FEH6",function(){function e(){if(!r){var e=document.createElement("script");e.id="boomr-scr-as",e.src=window.BOOMR.url,e.async=!0,o.appendChild(e),r=!0}}function t(e){r=!0;var n,t,a,i,d=document,O=window;if(window.BOOMR.snippetMethod=e?"if":"i",t=function(e,n){var t=d.createElement("script");t.id=n||"boomr-if-as",t.src=window.BOOMR.url,BOOMR_lstart=(new Date).getTime(),e=e||d.body,e.appendChild(t)},!window.addEventListener&&window.attachEvent&&navigator.userAgent.match(/MSIE [67]\./))return window.BOOMR.snippetMethod="s",void t(o,"boomr-async");a=document.createElement("IFRAME"),a.src="about:blank",a.title="",a.role="presentation",a.loading="eager",i=(a.frameElement||a).style,i.width=0,i.height=0,i.border=0,i.display="none",o.appendChild(a);try{O=a.contentWindow,d=O.document.open()}catch(_){n=document.domain,a.src="javascript:var d=document.open();d.domain='"+n+"';void 0;",O=a.contentWindow,d=O.document.open()}if(n)d._boomrl=function(){this.domain=n,t()},d.write("<bo"+"dy onload='document._boomrl();'>");else if(O._boomrl=function(){t()},O.addEventListener)O.addEventListener("load",O._boomrl,!1);else if(O.attachEvent)O.attachEvent("onload",O._boomrl);d.close()}function a(e){window.BOOMR_onload=e&&e.timeStamp||(new Date).getTime()}if(!window.BOOMR||!window.BOOMR.version&&!window.BOOMR.snippetExecuted){window.BOOMR=window.BOOMR||{},window.BOOMR.snippetStart=(new Date).getTime(),window.BOOMR.snippetExecuted=!0,window.BOOMR.snippetVersion=14,window.BOOMR.url=n+"49VLA-CFTHA-CGTWE-8Y5XU-3FEH6";var i=document.currentScript||document.getElementsByTagName("script")[0],o=i.parentNode,r=!1,d=document.createElement("link");if(d.relList&&"function"==typeof d.relList.supports&&d.relList.supports("preload")&&"as"in d)window.BOOMR.snippetMethod="p",d.href=window.BOOMR.url,d.rel="preload",d.as="script",d.addEventListener("load",e),d.addEventListener("error",function(){t(!0)}),setTimeout(function(){if(!r)t(!0)},3e3),BOOMR_lstart=(new Date).getTime(),o.appendChild(d);else t(!1);if(window.addEventListener)window.addEventListener("load",a,!1);else if(window.attachEvent)window.attachEvent("onload",a)}}(),"".length>0)if(e&&"performance"in e&&e.performance&&"function"==typeof e.performance.setResourceTimingBufferSize)e.performance.setResourceTimingBufferSize();!function(){if(BOOMR=e.BOOMR||{},BOOMR.plugins=BOOMR.plugins||{},!BOOMR.plugins.AK){var n=""=="true"?1:0,t="",a="akejqhiccbmkm2nxyu6a-f-f0035e48b-clientnsv4-s.akamaihd.net",i="false"=="true"?2:1,o={"ak.v":"39","ak.cp":"1726170","ak.ai":parseInt("1113999",10),"ak.ol":"0","ak.cr":20,"ak.ipv":4,"ak.proto":"h2","ak.rid":"179053a1","ak.r":47359,"ak.a2":n,"ak.m":"dsca","ak.n":"essl","ak.bpcip":"2.136.152.0","ak.cport":64287,"ak.gh":"2.16.64.164","ak.quicv":"","ak.tlsv":"tls1.3","ak.0rtt":"","ak.0rtt.ed":"","ak.csrc":"-","ak.acc":"","ak.t":"1773651260","ak.ak":"hOBiQwZUYzCg5VSAfCLimQ==dVu4tvY1Ve+qjEApD4BBJj/+m+vR8Ow0WtgBZN6tklI6RyBGlOkYNR5jfc7mxpN36MZGxU7LW2VdEFFIGwsjvq5s9Q+t/Pj5zSr7GuK780EEMMHzgtBAqaV1xgGit7P7tMOmLAeZFVGSNFSz/0y2ai909n8TkzvMGguhDXmjHSy7a2h52y0VH7MxseaBmlis9vCC/ZPexTcwC55sKsSNJDWIT46HcHDA/RGqa67zhWOmpw4tUe6yc3/8dmw4+ZYUwvkJJHr7oJDylvkV2GuTZkEINbJGk0w9KRmJKFc1ZgEdt+dcIB2v4xDqKCkV6kTTuvKgL9y/JngkEFDOqRuv0kC201znids59Hyd1fBbHYQOPjsiv75vNdFRofvBV85dgaJ8pNjtU6uURRVmTDt3XHFId2vGZTPRWqnCbh5vhRc=","ak.pv":"51","ak.dpoabenc":"","ak.tf":i};if(""!==t)o["ak.ruds"]=t;var r={i:!1,av:function(n){var t="http.initiator";if(n&&(!n[t]||"spa_hard"===n[t]))o["ak.feo"]=void 0!==e.aFeoApplied?1:0,BOOMR.addVar(o)},rv:function(){var e=["ak.bpcip","ak.cport","ak.cr","ak.csrc","ak.gh","ak.ipv","ak.m","ak.n","ak.ol","ak.proto","ak.quicv","ak.tlsv","ak.0rtt","ak.0rtt.ed","ak.r","ak.acc","ak.t","ak.tf"];BOOMR.removeVar(e)}};BOOMR.plugins.AK={akVars:o,akDNSPreFetchDomain:a,init:function(){if(!r.i){var e=BOOMR.subscribe;e("before_beacon",r.av,null,null),e("onbeacon",r.rv,null,null),r.i=!0}return this},is_complete:function(){return!0}}}}()}(window);</script></head>
+<body  id="page-mod-assign-view" class="format-topics limitedwidth  path-mod path-mod-assign chrome dir-ltr lang-es yui-skin-sam yui3-skin-sam auladecroly-com pagelayout-incourse course-219 context-55799 cmid-43253 cm-type-assign category-33 ">
+<div class="toast-wrapper mx-auto py-0 fixed-top" role="status" aria-live="polite"></div>
+
+<div id="page-wrapper" class="d-print-block">
+
+    <div>
+    <a class="sr-only sr-only-focusable" href="#maincontent">Salta al contenido principal</a>
+</div><script src="https://auladecroly.com/lib/javascript.php/-1/lib/polyfills/polyfill.js"></script>
+<script src="https://auladecroly.com/theme/yui_combo.php?rollup/3.17.2/yui-moodlesimple-min.js"></script><script src="https://auladecroly.com/lib/javascript.php/-1/lib/javascript-static.js"></script>
+<script>
+//<![CDATA[
+document.body.className += ' jsenabled';
+//]]>
+</script>
+
+
+
+    <nav class="fixed-top navbar navbar-light bg-white navbar-expand moodle-has-zindex" aria-label="Navegación del sitio">
+    
+            <div data-region="drawer-toggle" class="d-inline-block mr-3">
+                <button aria-expanded="false" aria-controls="nav-drawer" type="button" class="btn nav-link float-sm-left mr-1 btn-light bg-gray" data-action="toggle-drawer" data-side="left" data-preference="drawer-open-nav"><i class="icon fa fa-bars fa-fw " aria-hidden="true"  ></i><span class="sr-only">Panel lateral</span></button>
+            </div>
+    
+            <a href="https://auladecroly.com/my" class="navbar-brand aabtn has-logo mt-1">
+                <span class="logo d-none d-sm-inline">
+                    <img src="https://auladecroly.com/pluginfile.php/2/core_admin/logo/0x200/1772697746/logo-decroly.jpg" alt="Decroly">
+                </span>
+                <span class="site-name d-none d-md-inline">Decroly</span>
+            </a>
+    
+            <ul class="navbar-nav d-none d-md-flex">
+                <!-- page_heading_menu -->
+                
+            </ul>
+    
+            <!-- Aquí renderizamos el menú de idiomas SIEMPRE en escritorio -->
+            <div class="langmenu-container ml-2">
+                <div class="langmenu d-inline-block">
+    <form method="get" action="https://auladecroly.com/mod/assign/view.php" class="form-inline" id="single_select_f69b7c53d0809d3">
+            <input type="hidden" name="id" value="43253">
+            <input type="hidden" name="rownum" value="0">
+            <input type="hidden" name="useridlistid" value="69b7c53d05724449040679">
+            <input type="hidden" name="action" value="">
+            <label for="single_select69b7c53d0809d4">
+                <span class="accesshide " >Idioma</span>
+            </label>
+        <select  id="single_select69b7c53d0809d4" class="custom-select langmenu" name="lang"
+                 >
+                    <option  value="en" >English ‎(en)‎</option>
+                    <option  value="es" selected>Español - Internacional ‎(es)‎</option>
+        </select>
+        <noscript>
+            <input type="submit" class="btn btn-secondary ml-1" value="Ir">
+        </noscript>
+    </form>
+</div>
+            </div>
+    
+    
+            <div class="ml-auto">
+                
+            </div>
+                <div class="primary-navigation d-none d-md-block ml-2">
+                    <nav class="moremenu navigation">
+                        <ul id="moremenu-69b7c53d151a6-navbar-nav" role="menubar" class="nav more-nav navbar-nav">
+                            <li role="none" class="nav-item dropdown dropdownmoremenu d-none" data-region="morebutton">
+                                <a class="dropdown-toggle nav-link " href="#" id="moremenu-dropdown-69b7c53d151a6" role="menuitem" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" tabindex="-1">
+                                    Más
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-left" data-region="moredropdown" aria-labelledby="moremenu-dropdown-69b7c53d151a6" role="menu">
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            <ul class="nav navbar-nav usernav">
+                
+                <!-- navbar_plugin_output -->
+                <li class="nav-item">
+                    <div class="popover-region collapsed popover-region-notifications"
+    id="nav-notification-popover-container" data-userid="2076"
+    data-region="popover-region">
+    <div class="popover-region-toggle nav-link icon-no-margin"
+        data-region="popover-region-toggle"
+        role="button"
+        aria-controls="popover-region-container-69b7c53d197f369b7c53d0809d6"
+        aria-haspopup="true"
+        aria-label="Mostrar la ventana de notificaciones cuando no hay ninguna"
+        tabindex="0">
+                <i class="icon fa iconic-icon iconic-bell fa-fw "  title="Mostrar/ocultar menú de notificaciones" role="img" aria-label="Mostrar/ocultar menú de notificaciones"></i>
+        <div class="count-container " data-region="count-container"
+        aria-label="Hay 3 notificaciones sin leer">3</div>
+
+    </div>
+    <div 
+        id="popover-region-container-69b7c53d197f369b7c53d0809d6"
+        class="popover-region-container"
+        data-region="popover-region-container"
+        aria-expanded="false"
+        aria-hidden="true"
+        aria-label="Ventana de notificación"
+        role="region">
+        <div class="popover-region-header-container">
+            <h3 class="popover-region-header-text" data-region="popover-region-header-text">Notificaciones</h3>
+            <div class="popover-region-header-actions" data-region="popover-region-header-actions">        <a class="mark-all-read-button jjjjj"
+           href="#"
+           title="Marcar como leído"
+           data-action="mark-all-read"
+           role="button"
+           aria-label="Marcar como leído">
+            <span class="normal-icon"><i class="icon fa fa-check fa-fw " aria-hidden="true"  ></i></span>
+            <span class="loading-icon icon-no-margin"><i class="icon fa fa-circle-o-notch fa-spin fa-fw "  title="Cargando" role="img" aria-label="Cargando"></i></span>
+        </a>
+        <a href="https://auladecroly.com/message/notificationpreferences.php"
+           title="Preferencias de notificación"
+           aria-label="Preferencias de notificación">
+            <i class="icon fa iconic-icon iconic-settings fa-fw " aria-hidden="true"  ></i>
+        </a>
+</div>
+        </div>
+        <div class="popover-region-content-container" data-region="popover-region-content-container">
+            <div class="popover-region-content" data-region="popover-region-content">
+                        <div class="all-notifications"
+            data-region="all-notifications"
+            role="log"
+            aria-busy="false"
+            aria-atomic="false"
+            aria-relevant="additions"></div>
+        <div class="empty-message" tabindex="0" data-region="empty-message">No tienes notificaciones</div>
+
+            </div>
+            <span class="loading-icon icon-no-margin"><i class="icon fa fa-circle-o-notch fa-spin fa-fw "  title="Cargando" role="img" aria-label="Cargando"></i></span>
+        </div>
+                <a class="see-all-link"
+                    href="https://auladecroly.com/message/output/popup/notifications.php">
+                    <div class="popover-region-footer-container">
+                        <div class="popover-region-seeall-text">Ver todo</div>
+                    </div>
+                </a>
+    </div>
+</div><div class="popover-region collapsed" data-region="popover-region-messages">
+    <a id="message-drawer-toggle-69b7c53d1a23769b7c53d0809d7" class="nav-link popover-region-toggle position-relative icon-no-margin" href="#"
+            role="button">
+        <i class="icon fa iconic-icon iconic-message fa-fw "  title="Mostrar/ocultar cajón de mensajería" role="img" aria-label="Mostrar/ocultar cajón de mensajería"></i>
+        <div
+            class="count-container hidden"
+            data-region="count-container"
+        >
+            <span aria-hidden="true">0</span>
+            <span class="sr-only">Hay 0 conversaciones sin leer</span>
+        </div>
+    </a>
+    <span class="sr-only sr-only-focusable" data-region="jumpto" tabindex="-1"></span></div><div class="popover-region collapsed popover-region-mail"
+            id="nav-mail-popover-container"
+
+    data-region="popover-region">
+    <div class="popover-region-toggle nav-link icon-no-margin"
+        data-region="popover-region-toggle"
+        role="button"
+        aria-controls="popover-region-container-69b7c53d1a87369b7c53d0809d8"
+        aria-haspopup="true"
+        aria-label="Muestra/oculta el menú del correo"
+        tabindex="0">
+                <i class="icon fa fa-envelope fa-fw "  title="Muestra/oculta el menú del correo" role="img" aria-label="Muestra/oculta el menú del correo"></i>
+
+    </div>
+    <div 
+        id="popover-region-container-69b7c53d1a87369b7c53d0809d8"
+        class="popover-region-container"
+        data-region="popover-region-container"
+        aria-expanded="false"
+        aria-hidden="true"
+        aria-label="Menú del correo"
+        role="region">
+        <div class="popover-region-header-container">
+            <h3 class="popover-region-header-text" data-region="popover-region-header-text">Correo</h3>
+            <div class="popover-region-header-actions" data-region="popover-region-header-actions">        <a href="https://auladecroly.com/local/mail/create.php?c=219&amp;sesskey=Txoy1D5evj" class="mail-navbar-menu-compose-link">
+            Redactar
+        </a>
+        <a href="https://auladecroly.com/local/mail/preferences.php" title="Preferencias">
+            <i class="icon fa iconic-icon iconic-settings fa-fw "  title="Preferencias" role="img" aria-label="Preferencias"></i>
+        </a>
+</div>
+        </div>
+        <div class="popover-region-content-container" data-region="popover-region-content-container">
+            <div class="popover-region-content" data-region="popover-region-content">
+                        <div class="mail-navbar-menu">
+            <a href="https://auladecroly.com/local/mail/view.php?t=inbox" 
+                class="mail-navbar-menu-item
+                    
+                    ">
+                
+                
+                <i class="icon fa fa-inbox fa-fw " aria-hidden="true"  ></i>
+                Bandeja de entrada
+            </a>
+            <a href="https://auladecroly.com/local/mail/view.php?t=starred" 
+                class="mail-navbar-menu-item
+                    
+                    ">
+                
+                
+                <i class="icon fa fa-star fa-fw " aria-hidden="true"  ></i>
+                Destacado
+            </a>
+            <a href="https://auladecroly.com/local/mail/view.php?t=drafts" 
+                class="mail-navbar-menu-item
+                    
+                    ">
+                
+                
+                <i class="icon fa fa-file fa-fw " aria-hidden="true"  ></i>
+                Borradores
+            </a>
+            <a href="https://auladecroly.com/local/mail/view.php?t=sent" 
+                class="mail-navbar-menu-item
+                    
+                    ">
+                
+                
+                <i class="icon fa fa-paper-plane fa-fw " aria-hidden="true"  ></i>
+                Enviados
+            </a>
+            <a href="https://auladecroly.com/local/mail/view.php?t=trash" 
+                class="mail-navbar-menu-item
+                    
+                    ">
+                
+                
+                <i class="icon fa fa-trash fa-fw " aria-hidden="true"  ></i>
+                Papelera
+            </a>
+        </div>
+
+            </div>
+            <span class="loading-icon icon-no-margin"><i class="icon fa fa-circle-o-notch fa-spin fa-fw "  title="Cargando" role="img" aria-label="Cargando"></i></span>
+        </div>
+    </div>
+</div>
+                </li>
+                <!-- user_menu -->
+                <li class="nav-item align-items-center pl-2">
+                    <div class="usermenu"><div class="action-menu moodle-actionmenu nowrap-items" id="action-menu-0" data-enhance="moodle-core-actionmenu">
+
+        <div class="menubar d-flex " id="action-menu-0-menubar">
+
+            
+
+
+                <div class="action-menu-trigger">
+                    <div class="dropdown">
+                        <a
+                            href="#"
+                            tabindex="0"
+                            class="nav-link dropdown-toggle icon-no-margin"
+                            id="action-menu-toggle-0"
+                            aria-label="Menú de usuario"
+                            data-toggle="dropdown"
+                            role="button"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                            aria-controls="action-menu-0-menu"
+                        >
+                            
+                            <span class="userbutton"><span class="usertext mr-1">Andrea Gutiérrez Peña</span><span class="avatars"><span class="avatar current"><img src="https://secure.gravatar.com/avatar/0f30a385b05a9cf44e83053d9d42363a?s=35&amp;d=mm" class="userpicture defaultuserpic" width="35" height="35" alt="" /></span></span></span>
+                                
+                            <b class="caret"></b>
+                        </a>
+                            <div class="dropdown-menu menu dropdown-menu-right" id="action-menu-0-menu" data-rel="menu-content" aria-labelledby="action-menu-toggle-0" role="menu">
+                                                                <a href="https://auladecroly.com/user/profile.php" class="dropdown-item menu-action" role="menuitem" data-title="profile,moodle" tabindex="-1" aria-labelledby="actionmenuaction-1">
+                                <span class="menu-action-text" id="actionmenuaction-1">Perfil</span>
+                        </a>
+                    <div class="dropdown-divider" role="presentation"><span class="filler">&nbsp;</span></div>
+                                                                <a href="https://auladecroly.com/grade/report/overview/index.php" class="dropdown-item menu-action" role="menuitem" data-title="grades,grades" tabindex="-1" aria-labelledby="actionmenuaction-2">
+                                <span class="menu-action-text" id="actionmenuaction-2">Calificaciones</span>
+                        </a>
+                                                                <a href="https://auladecroly.com/calendar/view.php?view=month" class="dropdown-item menu-action" role="menuitem" data-title="calendar,core_calendar" tabindex="-1" aria-labelledby="actionmenuaction-3">
+                                <span class="menu-action-text" id="actionmenuaction-3">Calendario</span>
+                        </a>
+                                                                <a href="https://auladecroly.com/user/files.php" class="dropdown-item menu-action" role="menuitem" data-title="privatefiles,moodle" tabindex="-1" aria-labelledby="actionmenuaction-4">
+                                <span class="menu-action-text" id="actionmenuaction-4">Archivos privados</span>
+                        </a>
+                                                                <a href="https://auladecroly.com/reportbuilder/index.php" class="dropdown-item menu-action" role="menuitem" data-title="reports,core_reportbuilder" tabindex="-1" aria-labelledby="actionmenuaction-5">
+                                <span class="menu-action-text" id="actionmenuaction-5">Informes</span>
+                        </a>
+                    <div class="dropdown-divider" role="presentation"><span class="filler">&nbsp;</span></div>
+                                                                <a href="https://auladecroly.com/user/preferences.php" class="dropdown-item menu-action" role="menuitem" data-title="preferences,moodle" tabindex="-1" aria-labelledby="actionmenuaction-6">
+                                <span class="menu-action-text" id="actionmenuaction-6">Preferencias</span>
+                        </a>
+                    <div class="dropdown-divider" role="presentation"><span class="filler">&nbsp;</span></div>
+                                                                <a href="https://auladecroly.com/login/logout.php?sesskey=Txoy1D5evj" class="dropdown-item menu-action" role="menuitem" data-title="logout,moodle" tabindex="-1" aria-labelledby="actionmenuaction-7">
+                                <span class="menu-action-text" id="actionmenuaction-7">Cerrar sesión</span>
+                        </a>
+                            </div>
+                    </div>
+                </div>
+
+        </div>
+
+</div></div>
+                </li>
+                
+            </ul>
+            <!-- search_box -->
+    </nav>
+    <div id="nav-drawer" data-region="drawer" class="d-print-none moodle-has-zindex closed" 
+    
+    aria-hidden="true" tabindex="-1">
+    
+    <section data-region="blocks-column-left" class="d-print-none" aria-label="Bloques">
+        <aside id="block-region-side-left" class="block-region" data-blockregion="side-left" data-droptarget="1"></aside>
+    </section>
+    
+<nav class="list-group" aria-label="">
+    <ul>
+            <li>
+                <a class="list-group-item list-group-item-action  " href="https://auladecroly.com/course/view.php?id=219" data-key="coursehome" data-isexpandable="0" data-indent="0" data-showdivider="0" data-type="60" data-nodetype="0" data-collapse="0" data-forceopen="0" data-isactive="0" data-hidden="0" data-preceedwithhr="0"  data-toggle="tooltip"
+                   data-placement="right" title="DAW1BD">
+                    <div class="ml-0">
+                        <div class="media">
+                                <span class="media-left">
+                                    <i class="icon fa iconic-icon iconic-graduation-cap mt-1 fa-fw " aria-hidden="true"  ></i>
+                                </span>
+                            <span class="media-body ">DAW1BD</span>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a class="list-group-item list-group-item-action  hidden
+                " href="https://auladecroly.com/user/index.php?id=219" data-key="participants" data-isexpandable="0" data-indent="0" data-showdivider="0" data-type="90" data-nodetype="1" data-collapse="0" data-forceopen="0" data-isactive="0" data-hidden="0" data-preceedwithhr="0" data-parent-key="219" data-toggle="tooltip"
+                   data-placement="right" title="Participantes">
+                    <div class="ml-0">
+                        <div class="media">
+                                <span class="media-left">
+                                    <i class="icon fa iconic-icon iconic-users fa-fw " aria-hidden="true"  ></i>
+                                </span>
+                            <span class="media-body ">Participantes</span>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a class="list-group-item list-group-item-action  " href="https://auladecroly.com/admin/tool/lp/coursecompetencies.php?courseid=219" data-key="competencies" data-isexpandable="0" data-indent="0" data-showdivider="0" data-type="70" data-nodetype="0" data-collapse="0" data-forceopen="0" data-isactive="0" data-hidden="0" data-preceedwithhr="0" data-parent-key="219" data-toggle="tooltip"
+                   data-placement="right" title="Competencias">
+                    <div class="ml-0">
+                        <div class="media">
+                                <span class="media-left">
+                                    <i class="icon fa iconic-icon iconic-check-circle fa-fw " aria-hidden="true"  ></i>
+                                </span>
+                            <span class="media-body ">Competencias</span>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a class="list-group-item list-group-item-action  hidden
+                " href="https://auladecroly.com/grade/report/index.php?id=219" data-key="grades" data-isexpandable="0" data-indent="0" data-showdivider="0" data-type="70" data-nodetype="0" data-collapse="0" data-forceopen="0" data-isactive="0" data-hidden="0" data-preceedwithhr="0" data-parent-key="219" data-toggle="tooltip"
+                   data-placement="right" title="Calificaciones">
+                    <div class="ml-0">
+                        <div class="media">
+                                <span class="media-left">
+                                    <i class="icon fa iconic-icon iconic-table-rows fa-fw " aria-hidden="true"  ></i>
+                                </span>
+                            <span class="media-body ">Calificaciones</span>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a class="list-group-item list-group-item-action  " href="https://auladecroly.com/course/view.php?id=219#section-0" data-key="3257" data-isexpandable="0" data-indent="0" data-showdivider="0" data-type="30" data-nodetype="1" data-collapse="0" data-forceopen="0" data-isactive="0" data-hidden="0" data-preceedwithhr="0" data-parent-key="219" data-toggle="tooltip"
+                   data-placement="right" title="Objetivos del módulo">
+                    <div class="ml-0">
+                        <div class="media">
+                                <span class="media-left">
+                                    <i class="icon fa iconic-icon iconic-bookmark fa-fw " aria-hidden="true"  ></i>
+                                </span>
+                            <span class="media-body ">Objetivos del módulo</span>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a class="list-group-item list-group-item-action  " href="https://auladecroly.com/course/view.php?id=219&amp;section=1" data-key="3260" data-isexpandable="0" data-indent="0" data-showdivider="0" data-type="30" data-nodetype="1" data-collapse="0" data-forceopen="0" data-isactive="0" data-hidden="0" data-preceedwithhr="0" data-parent-key="219" data-toggle="tooltip"
+                   data-placement="right" title="UD1. Diseño conceptual de Bases de Datos ">
+                    <div class="ml-0">
+                        <div class="media">
+                                <span class="media-left">
+                                    <i class="icon fa iconic-icon iconic-bookmark fa-fw " aria-hidden="true"  ></i>
+                                </span>
+                            <span class="media-body ">UD1. Diseño conceptual de Bases de Datos </span>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a class="list-group-item list-group-item-action  " href="https://auladecroly.com/course/view.php?id=219&amp;section=2" data-key="3263" data-isexpandable="0" data-indent="0" data-showdivider="0" data-type="30" data-nodetype="1" data-collapse="0" data-forceopen="0" data-isactive="0" data-hidden="0" data-preceedwithhr="0" data-parent-key="219" data-toggle="tooltip"
+                   data-placement="right" title="UD2. Implementación de Bases de Datos">
+                    <div class="ml-0">
+                        <div class="media">
+                                <span class="media-left">
+                                    <i class="icon fa iconic-icon iconic-bookmark fa-fw " aria-hidden="true"  ></i>
+                                </span>
+                            <span class="media-body ">UD2. Implementación de Bases de Datos</span>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a class="list-group-item list-group-item-action active " href="https://auladecroly.com/course/view.php?id=219&amp;section=3" data-key="3266" data-isexpandable="0" data-indent="0" data-showdivider="0" data-type="30" data-nodetype="1" data-collapse="0" data-forceopen="1" data-isactive="1" data-hidden="0" data-preceedwithhr="0" data-parent-key="219" data-toggle="tooltip"
+                   data-placement="right" title="UD3. Creación y modificación de Bases de Datos">
+                    <div class="ml-0">
+                        <div class="media">
+                                <span class="media-left">
+                                    <i class="icon fa iconic-icon iconic-bookmark fa-fw " aria-hidden="true"  ></i>
+                                </span>
+                            <span class="media-body font-weight-bold">UD3. Creación y modificación de Bases de Datos</span>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a class="list-group-item list-group-item-action  " href="https://auladecroly.com/user/index.php?id=219" data-key="localboostnavigationcustomcourseusers1" data-isexpandable="0" data-indent="0" data-showdivider="0" data-type="60" data-nodetype="0" data-collapse="0" data-forceopen="0" data-isactive="0" data-hidden="0" data-preceedwithhr="0" data-parent-key="219" data-toggle="tooltip"
+                   data-placement="right" title="Participantes">
+                    <div class="ml-0">
+                        <div class="media">
+                                <span class="media-left">
+                                    <i class="icon fa iconic-icon iconic-users fa-fw " aria-hidden="true"  ></i>
+                                </span>
+                            <span class="media-body ">Participantes</span>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a class="list-group-item list-group-item-action  " href="https://auladecroly.com/grade/report/index.php?id=219" data-key="localboostnavigationcustomcourseusers2" data-isexpandable="0" data-indent="0" data-showdivider="0" data-type="60" data-nodetype="0" data-collapse="0" data-forceopen="0" data-isactive="0" data-hidden="0" data-preceedwithhr="0" data-parent-key="219" data-toggle="tooltip"
+                   data-placement="right" title="Calificaciones">
+                    <div class="ml-0">
+                        <div class="media">
+                                <span class="media-left">
+                                    <i class="icon fa iconic-icon iconic-table-rows fa-fw " aria-hidden="true"  ></i>
+                                </span>
+                            <span class="media-body ">Calificaciones</span>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            </ul>
+            </nav>
+            <nav class="list-group " aria-label="Sitio" style="padding: 0">
+            <ul>
+            <li>
+                <a class="list-group-item list-group-item-action  " href="https://auladecroly.com/my/" data-key="myhome" data-isexpandable="0" data-indent="0" data-showdivider="1" data-type="1" data-nodetype="1" data-collapse="0" data-forceopen="1" data-isactive="0" data-hidden="0" data-preceedwithhr="0"  data-toggle="tooltip"
+                   data-placement="right" title="Área personal">
+                    <div class="ml-0">
+                        <div class="media">
+                                <span class="media-left">
+                                    <i class="icon fa iconic-icon iconic-dashboard fa-fw " aria-hidden="true"  ></i>
+                                </span>
+                            <span class="media-body ">Área personal</span>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <div class="list-group-item mycoursesnode localboostnavigationcollapsedparent active_tree_node " data-key="localboostnavigationcustomrootusers1" data-isexpandable="0" data-indent="0" data-showdivider="0" data-type="60" data-nodetype="0" data-collapse="0" data-forceopen="1" data-isactive="1" data-hidden="0" data-preceedwithhr="0" data-parent-key="myhome">
+                    <div class="ml-0">
+                        <div class="media">
+                                <span class="media-left">
+                                    <i class="icon fa iconic-icon iconic-graduation-cap mt-1 fa-fw " aria-hidden="true"  ></i>
+                                </span>
+                            <span class="media-body">Mis cursos</span>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <a class="list-group-item list-group-item-action active localboostnavigationcollapsibleparent
+                categorynode
+                localboostnavigationcollapsibleparentforcenoindent
+                active_tree_node
+                " href="https://auladecroly.com/course/index.php?categoryid=33" data-key="localboostnavigationcustomrootusers2" data-isexpandable="0" data-indent="0" data-showdivider="0" data-type="60" data-nodetype="0" data-collapse="0" data-forceopen="1" data-isactive="1" data-hidden="0" data-preceedwithhr="0" data-parent-key="myhome" data-toggle="tooltip"
+                   data-placement="right" title="Desarrollo de Aplicaciones Web (DAW)">
+                    <div class="ml-0">
+                        <div class="media">
+                                <span class="media-left">
+                                    <i class="icon fa iconic-icon iconic-chevron-right fa-fw " aria-hidden="true"  ></i>
+                                </span>
+                            <span class="media-body font-weight-bold">Desarrollo de Aplicaciones Web (DAW)</span>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a class="list-group-item list-group-item-action  localboostnavigationcollapsiblechild
+                coursenode
+                " href="https://auladecroly.com/course/view.php?id=413" data-key="localboostnavigationcustomrootusers3" data-isexpandable="0" data-indent="0" data-showdivider="0" data-type="60" data-nodetype="0" data-collapse="0" data-forceopen="0" data-isactive="0" data-hidden="0" data-preceedwithhr="0" data-parent-key="localboostnavigationcustomrootusers2" data-toggle="tooltip"
+                   data-placement="right" title="DAW1 - Inglés Profesional">
+                    <div class="ml-0">
+                        <div class="media">
+                                <span class="media-left">
+                                    <i class="icon fa iconic-icon iconic-minus fa-fw " aria-hidden="true"  ></i>
+                                </span>
+                            <span class="media-body ">DAW1 - Inglés Profesional</span>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a class="list-group-item list-group-item-action  localboostnavigationcollapsiblechild
+                coursenode
+                " href="https://auladecroly.com/course/view.php?id=393" data-key="localboostnavigationcustomrootusers4" data-isexpandable="0" data-indent="0" data-showdivider="0" data-type="60" data-nodetype="0" data-collapse="0" data-forceopen="0" data-isactive="0" data-hidden="0" data-preceedwithhr="0" data-parent-key="localboostnavigationcustomrootusers2" data-toggle="tooltip"
+                   data-placement="right" title="DAW1 - Sostenibilidad Aplicada al Sistema Productivo">
+                    <div class="ml-0">
+                        <div class="media">
+                                <span class="media-left">
+                                    <i class="icon fa iconic-icon iconic-minus fa-fw " aria-hidden="true"  ></i>
+                                </span>
+                            <span class="media-body ">DAW1 - Sostenibilidad Aplicada al Sistema Productivo</span>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a class="list-group-item list-group-item-action active localboostnavigationcollapsiblechild
+                coursenode
+                active_tree_node
+                " href="https://auladecroly.com/course/view.php?id=219" data-key="localboostnavigationcustomrootusers5" data-isexpandable="0" data-indent="0" data-showdivider="0" data-type="60" data-nodetype="0" data-collapse="0" data-forceopen="1" data-isactive="1" data-hidden="0" data-preceedwithhr="0" data-parent-key="localboostnavigationcustomrootusers2" data-toggle="tooltip"
+                   data-placement="right" title="DAW1 - Bases de Datos">
+                    <div class="ml-0">
+                        <div class="media">
+                                <span class="media-left">
+                                    <i class="icon fa iconic-icon iconic-minus fa-fw " aria-hidden="true"  ></i>
+                                </span>
+                            <span class="media-body font-weight-bold">DAW1 - Bases de Datos</span>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a class="list-group-item list-group-item-action  localboostnavigationcollapsiblechild
+                coursenode
+                " href="https://auladecroly.com/course/view.php?id=221" data-key="localboostnavigationcustomrootusers6" data-isexpandable="0" data-indent="0" data-showdivider="0" data-type="60" data-nodetype="0" data-collapse="0" data-forceopen="0" data-isactive="0" data-hidden="0" data-preceedwithhr="0" data-parent-key="localboostnavigationcustomrootusers2" data-toggle="tooltip"
+                   data-placement="right" title="DAW1 - Entornos de Desarrollo">
+                    <div class="ml-0">
+                        <div class="media">
+                                <span class="media-left">
+                                    <i class="icon fa iconic-icon iconic-minus fa-fw " aria-hidden="true"  ></i>
+                                </span>
+                            <span class="media-body ">DAW1 - Entornos de Desarrollo</span>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a class="list-group-item list-group-item-action  localboostnavigationcollapsiblechild
+                coursenode
+                " href="https://auladecroly.com/course/view.php?id=225" data-key="localboostnavigationcustomrootusers7" data-isexpandable="0" data-indent="0" data-showdivider="0" data-type="60" data-nodetype="0" data-collapse="0" data-forceopen="0" data-isactive="0" data-hidden="0" data-preceedwithhr="0" data-parent-key="localboostnavigationcustomrootusers2" data-toggle="tooltip"
+                   data-placement="right" title="DAW1 - Lenguajes de Marcas y Sistemas de Gestión de la Información">
+                    <div class="ml-0">
+                        <div class="media">
+                                <span class="media-left">
+                                    <i class="icon fa iconic-icon iconic-minus fa-fw " aria-hidden="true"  ></i>
+                                </span>
+                            <span class="media-body ">DAW1 - Lenguajes de Marcas y Sistemas de Gestión de la Información</span>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a class="list-group-item list-group-item-action  localboostnavigationcollapsiblechild
+                coursenode
+                " href="https://auladecroly.com/course/view.php?id=228" data-key="localboostnavigationcustomrootusers8" data-isexpandable="0" data-indent="0" data-showdivider="0" data-type="60" data-nodetype="0" data-collapse="0" data-forceopen="0" data-isactive="0" data-hidden="0" data-preceedwithhr="0" data-parent-key="localboostnavigationcustomrootusers2" data-toggle="tooltip"
+                   data-placement="right" title="DAW1 - Programación">
+                    <div class="ml-0">
+                        <div class="media">
+                                <span class="media-left">
+                                    <i class="icon fa iconic-icon iconic-minus fa-fw " aria-hidden="true"  ></i>
+                                </span>
+                            <span class="media-body ">DAW1 - Programación</span>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a class="list-group-item list-group-item-action  localboostnavigationcollapsiblechild
+                coursenode
+                " href="https://auladecroly.com/course/view.php?id=231" data-key="localboostnavigationcustomrootusers9" data-isexpandable="0" data-indent="0" data-showdivider="0" data-type="60" data-nodetype="0" data-collapse="0" data-forceopen="0" data-isactive="0" data-hidden="0" data-preceedwithhr="0" data-parent-key="localboostnavigationcustomrootusers2" data-toggle="tooltip"
+                   data-placement="right" title="DAW1 - Sistemas Informáticos">
+                    <div class="ml-0">
+                        <div class="media">
+                                <span class="media-left">
+                                    <i class="icon fa iconic-icon iconic-minus fa-fw " aria-hidden="true"  ></i>
+                                </span>
+                            <span class="media-body ">DAW1 - Sistemas Informáticos</span>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a class="list-group-item list-group-item-action  localboostnavigationcollapsedparent
+                " href="https://auladecroly.com/calendar/view.php?view=month" data-key="localboostnavigationcustomrootusers10" data-isexpandable="0" data-indent="0" data-showdivider="0" data-type="60" data-nodetype="0" data-collapse="0" data-forceopen="0" data-isactive="0" data-hidden="0" data-preceedwithhr="0" data-parent-key="myhome" data-toggle="tooltip"
+                   data-placement="right" title="Calendario">
+                    <div class="ml-0">
+                        <div class="media">
+                                <span class="media-left">
+                                    <i class="icon fa iconic-icon iconic-calendar fa-fw " aria-hidden="true"  ></i>
+                                </span>
+                            <span class="media-body ">Calendario</span>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a class="list-group-item list-group-item-action  localboostnavigationcollapsedparent
+                " href="https://auladecroly.com/user/files.php" data-key="localboostnavigationcustomrootusers11" data-isexpandable="0" data-indent="0" data-showdivider="0" data-type="60" data-nodetype="0" data-collapse="0" data-forceopen="0" data-isactive="0" data-hidden="0" data-preceedwithhr="0" data-parent-key="myhome" data-toggle="tooltip"
+                   data-placement="right" title="Archivos privados">
+                    <div class="ml-0">
+                        <div class="media">
+                                <span class="media-left">
+                                    <i class="icon fa iconic-icon iconic-file fa-fw " aria-hidden="true"  ></i>
+                                </span>
+                            <span class="media-body ">Archivos privados</span>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <div class="flatnav-langmenu">
+                <div class="langmenu d-inline-block">
+    <form method="get" action="https://auladecroly.com/mod/assign/view.php" class="form-inline" id="single_select_f69b7c53d0809d3">
+            <input type="hidden" name="id" value="43253">
+            <input type="hidden" name="rownum" value="0">
+            <input type="hidden" name="useridlistid" value="69b7c53d05724449040679">
+            <input type="hidden" name="action" value="">
+            <label for="single_select69b7c53d0809d4">
+                <span class="accesshide " >Idioma</span>
+            </label>
+        <select  id="single_select69b7c53d0809d4" class="custom-select langmenu" name="lang"
+                 >
+                    <option  value="en" >English ‎(en)‎</option>
+                    <option  value="es" selected>Español - Internacional ‎(es)‎</option>
+        </select>
+        <noscript>
+            <input type="submit" class="btn btn-secondary ml-1" value="Ir">
+        </noscript>
+    </form>
+</div>
+            </div>
+
+    </ul>
+</nav>
+    
+    </div>
+
+    <div id="page" class="container-fluid d-print-block">
+        <header id="page-header" class="row   has-not-header  ">
+    <div class="col-12 pt-3">
+        <div class="card ">
+            <div class="card-body ">
+                <div class="d-flex flex-wrap">
+                        <div id="page-navbar">
+                            <nav aria-label="Barra de navegación"><ol class="breadcrumb"><li class="breadcrumb-item"><a title="Área personal" aria-current="page" href="https://auladecroly.com/my/">Área personal</a></li><li class="breadcrumb-item"><a title="Mis cursos" aria-current="page" href="https://auladecroly.com/my/courses.php">Mis cursos</a></li><li class="breadcrumb-item"><a title="Desarrollo de Aplicaciones Web (DAW)" href="https://auladecroly.com/course/index.php?categoryid=33">Desarrollo de Aplicaciones Web (DAW)</a></li><li class="breadcrumb-item"><a title="DAW1 - Bases de Datos" aria-current="page" href="https://auladecroly.com/course/view.php?id=219">DAW1 - Bases de Datos</a></li><li class="breadcrumb-item">UD3. Creación y modificación de Bases de Datos</li><li class="breadcrumb-item"><a title="Actividad 4. Modificaciones y consultas en SQL" aria-current="page" href="https://auladecroly.com/mod/assign/view.php?id=43253">Actividad 4. Modificaciones y consultas en SQL</a></li></ol></nav>
+                        </div>
+                    <div class="ml-auto d-flex">
+                        
+                    </div>
+                    <div id="course-header">
+                        
+                    </div>
+                </div>
+                <div class="d-sm-flex align-items-center">
+                    <div class="mr-auto">
+                        <div class="page-context-header"><div class="page-header-headings"><h1>DAW1 - Bases de Datos</h1></div></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div id="page-content" class="row pb-3 d-print-block">
+            <div id="region-main-box" class="col-12">
+                <section id="region-main"  aria-label="Contenido">
+
+                    <span class="notifications" id="user-notifications"></span>
+                        <span id="maincontent"></span>
+                        <div class="activity-header" data-for="page-activity-header">
+                                <span class="sr-only">Requisitos de finalización</span>
+                                <div data-region="activity-information" data-activityname="Actividad 4. Modificaciones y consultas en SQL" class="activity-information">
+
+            <div class="completion-info" data-region="completion-info">
+                                <button class="btn btn-success btn-sm text-nowrap" data-action="toggle-manual-completion" data-toggletype="manual:undo" data-cmid="43253" data-activityname="Actividad 4. Modificaciones y consultas en SQL" data-withavailability="0" title="Actividad 4. Modificaciones y consultas en SQL esta marcado como completado. Presione para deshacer." aria-label="Actividad 4. Modificaciones y consultas en SQL esta marcado como completado. Presione para deshacer." >
+                                    <i class="fa fa-check" aria-hidden="true"></i> Hecho
+                                </button>
+                        
+            </div>
+
+    <div data-region="activity-dates" class="activity-dates">
+        <div class="description-inner">
+                <div>
+                    <strong>Apertura:</strong> miércoles, 24 de enero de 2024, 00:00
+                </div>
+                <div>
+                    <strong>Cierre:</strong> lunes, 2 de febrero de 2026, 23:59
+                </div>
+        </div>
+    </div>
+</div>
+                                <div class="activity-description" id="intro">
+                                    <div class="no-overflow"><p>Seguid los pasos explicados en el documento adjunto para resolver la práctica. Enviad un informe según solicitado, sólo serán corregidos informes remitidos en formato PDF.</p>
+<p>La nomenclatura del fichero será la siguiente:</p>
+<p>*iniciales de mi nombre en minúsculas* + *primer apellido con la primera letra en mayúscula, el resto en minúsculas* + *_BD_UD3_P4.pdf*</p>
+<p>Ejemplo: jlArgumosa_BD_UD3_P4.pdf</p></div>
+                                </div>
+                            </div>
+                    <div role="main"><h2>Actividad 4. Modificaciones y consultas en SQL</h2><div id="intro" class="box py-3 generalbox boxaligncenter"><div class="no-overflow"><p>Seguid los pasos explicados en el documento adjunto para resolver la práctica. Enviad un informe según solicitado, sólo serán corregidos informes remitidos en formato PDF.</p>
+<p>La nomenclatura del fichero será la siguiente:</p>
+<p>*iniciales de mi nombre en minúsculas* + *primer apellido con la primera letra en mayúscula, el resto en minúsculas* + *_BD_UD3_P4.pdf*</p>
+<p>Ejemplo: jlArgumosa_BD_UD3_P4.pdf</p></div><div id="assign_files_tree69b7c53d0809d1"><ul><li yuiConfig='{"type":"html"}'><div><div class="fileuploadsubmission"><img class="icon icon" alt="UD3.4 Modificaciones y consultas en SQL.pdf" title="UD3.4 Modificaciones y consultas en SQL.pdf" src="https://auladecroly.com/theme/image.php/proeducaboost/core/1772697746/f/pdf" /> <a target="_blank" href="https://auladecroly.com/pluginfile.php/55799/mod_assign/introattachment/0/UD3.4%20Modificaciones%20y%20consultas%20en%20SQL.pdf?forcedownload=1">UD3.4 Modificaciones y consultas en SQL.pdf</a>   </div><div class="fileuploadsubmissiontime">27 de enero de 2025, 13:16</div></div></li></ul></div></div><div class="container-fluid mb-4">
+    <div class="row">
+    </div>
+</div><div class="submissionstatustable"><h3>Estado de la entrega</h3><div class="box py-3 boxaligncenter submissionsummarytable"><div class="table-responsive"><table class="generaltable">
+<tbody><tr class="">
+<th class="cell c0" style="" scope="row">Estado de la entrega</th>
+<td class="submissionstatussubmitted cell c1 lastcol" style="">Enviado para calificar</td>
+</tr>
+<tr class="">
+<th class="cell c0" style="" scope="row">Fecha de entrega</th>
+<td class="cell c1 lastcol" style="">lunes, 2 de febrero de 2026, 23:59</td>
+</tr>
+<tr class="">
+<th class="cell c0" style="" scope="row">Tiempo restante</th>
+<td class="earlysubmission cell c1 lastcol" style="">La tarea fue enviada 5 días 12 horas antes de la fecha límite</td>
+</tr>
+<tr class="">
+<th class="cell c0" style="" scope="row">Última modificación</th>
+<td class="cell c1 lastcol" style="">miércoles, 28 de enero de 2026, 11:27</td>
+</tr>
+<tr class="">
+<th class="cell c0" style="" scope="row">Archivos enviados</th>
+<td class="cell c1 lastcol" style=""><div class="box py-3 boxaligncenter plugincontentsummary summary_assignsubmission_file_214997"><div id="assign_files_tree69b7c53d0809d19"><ul><li yuiConfig='{"type":"html"}'><div><div class="fileuploadsubmission"><img class="icon icon" alt="aGutierrez_BD_UD3_P4.pdf" title="aGutierrez_BD_UD3_P4.pdf" src="https://auladecroly.com/theme/image.php/proeducaboost/core/1772697746/f/pdf" /> <a target="_blank" href="https://auladecroly.com/pluginfile.php/55799/assignsubmission_file/submission_files/214997/aGutierrez_BD_UD3_P4.pdf?forcedownload=1">aGutierrez_BD_UD3_P4.pdf</a>   </div><div class="fileuploadsubmissiontime">28 de enero de 2026, 11:27</div></div></li></ul></div></div></td>
+</tr>
+<tr class="lastrow">
+<th class="cell c0" style="" scope="row">Comentarios de la entrega</th>
+<td class="cell c1 lastcol" style=""><div class="box py-3 boxaligncenter plugincontentsummary summary_assignsubmission_comments_214997"><div class="commentscontainer"><div style="display:none" id="cmt-tmpl"><div class="comment-message"><div class="comment-message-meta mr-3"><span class="picture">___picture___</span><span class="user">___name___</span> - <span class="time">___time___</span></div><div class="text">___content___</div></div></div><div class="mdl-left"><a class="showcommentsnonjs" href="https://auladecroly.com/mod/assign/view.php?id=43253&amp;rownum=0&amp;useridlistid=69b7c53d05724449040679&amp;action&amp;nonjscomment=1&amp;comment_itemid=214997&amp;comment_context=55799&amp;comment_component=assignsubmission_comments&amp;comment_area=submission_comments">Mostrar comentarios</a><a class="comment-link" id="comment-link-69b7c53d232bc" href="#" role="button" aria-expanded="false"><i class="icon fa iconic-icon iconic-carat-down iconic-270 fa-fw "  title="Comentarios" role="img" aria-label="Comentarios"></i><span id="comment-link-text-69b7c53d232bc">Comentarios (0)</span></a><div id="comment-ctrl-69b7c53d232bc" class="comment-ctrl"><ul id="comment-list-69b7c53d232bc" class="comment-list"><li class="first"></li></ul><div id="comment-pagination-69b7c53d232bc" class="comment-pagination"></div><div class="comment-area"><div class="db"><textarea name="content" rows="2" id="dlg-content-69b7c53d232bc" aria-label="Agregar un comentario..." cols="20"></textarea></div><div class="fd" id="comment-action-69b7c53d232bc"><a id="comment-action-post-69b7c53d232bc" href="#">Guardar comentario</a><span> | </span><a id="comment-action-cancel-69b7c53d232bc" href="#">Cancelar</a></div></div><div class="clearer"></div></div></div></div></div></td>
+</tr>
+</tbody>
+</table>
+</div></div></div><div class="feedback"><h3>Comentario</h3><div class="box py-3 boxaligncenter feedbacktable"><div class="table-responsive"><table class="generaltable">
+<tbody><tr class="">
+<th class="cell c0" style="" scope="row">Calificación</th>
+<td class="cell c1 lastcol" style="">100,00&nbsp;/&nbsp;100,00</td>
+</tr>
+<tr class="">
+<th class="cell c0" style="" scope="row">Calificado sobre</th>
+<td class="cell c1 lastcol" style="">martes, 3 de febrero de 2026, 15:42</td>
+</tr>
+<tr class="">
+<th class="cell c0" style="" scope="row">Calificado por</th>
+<td class="cell c1 lastcol" style=""><a href="https://auladecroly.com/user/view.php?id=182&amp;course=219" class="d-inline-block aabtn"><img src="https://auladecroly.com/pluginfile.php/22829/user/icon/proeducaboost/f2?rev=1470" class="userpicture" width="35" height="35" alt="José Luis Argumosa Antón" title="José Luis Argumosa Antón" /></a><img class="icon spacer" width="30" height="1" alt="" aria-hidden="true" src="https://auladecroly.com/theme/image.php/proeducaboost/core/1772697746/spacer" />José Luis Argumosa Antón</td>
+</tr>
+<tr class="lastrow">
+<th class="cell c0" style="" scope="row">Comentarios de retroalimentación</th>
+<td class="cell c1 lastcol" style=""><div class="box py-3 boxaligncenter plugincontentsummary summary_assignfeedback_comments_174795"><p>Buen trabajo, Andrea. Pero, ¿te has percatado de que 10010 tiene dos salarios en el ejercicio?</p></div></td>
+</tr>
+</tbody>
+</table>
+</div></div></div></div>
+                    <div class="mt-5 mb-1 activity-navigation container-fluid">
+<div class="row">
+    <div class="col-md-4">        <div class="float-left">
+                <a href="https://auladecroly.com/mod/assign/view.php?id=41683&forceview=1" id="prev-activity-link" class="btn btn-link" >&#x25C4; Actividad 3. Uso de la cláusula JOIN</a>
+
+        </div>
+</div>
+    <div class="col-md-4">        <div class="mdl-align">
+            <div class="urlselect">
+    <form method="post" action="https://auladecroly.com/course/jumpto.php" class="form-inline" id="url_select_f69b7c53d0809d17">
+        <input type="hidden" name="sesskey" value="Txoy1D5evj">
+            <label for="jump-to-activity" class="sr-only">
+                Ir a...
+            </label>
+        <select  id="jump-to-activity" class="custom-select urlselect" name="jump"
+                 >
+                    <option value="" selected>Ir a...</option>
+                    <option value="/mod/resource/view.php?id=33918&amp;forceview=1" >Programación didáctica</option>
+                    <option value="/mod/forum/view.php?id=41320&amp;forceview=1" >Avisos</option>
+                    <option value="/mod/assign/view.php?id=85955&amp;forceview=1" >Cuestionario autoevaluación</option>
+                    <option value="/mod/resource/view.php?id=28659&amp;forceview=1" >1.1 Sistemas de almacenamiento de la información</option>
+                    <option value="/mod/resource/view.php?id=60674&amp;forceview=1" >1.2 Diseño conceptual</option>
+                    <option value="/mod/resource/view.php?id=28662&amp;forceview=1" >1.3 Diseño conceptual II</option>
+                    <option value="/mod/resource/view.php?id=28805&amp;forceview=1" >1.4 Modelo relacional</option>
+                    <option value="/mod/resource/view.php?id=32264&amp;forceview=1" >1.5 Modelo relacional II</option>
+                    <option value="/mod/assign/view.php?id=30590&amp;forceview=1" >Creando nuestros informes</option>
+                    <option value="/mod/resource/view.php?id=62467&amp;forceview=1" >Cómo presentar nuestra idea</option>
+                    <option value="/mod/assign/view.php?id=79141&amp;forceview=1" >Actividad 0. Evaluación inicial</option>
+                    <option value="/mod/assign/view.php?id=28665&amp;forceview=1" >Actividad 1. Introducción a las Bases de Datos</option>
+                    <option value="/mod/assign/view.php?id=60673&amp;forceview=1" >Actividad 2. Diseño conceptual</option>
+                    <option value="/mod/assign/view.php?id=61121&amp;forceview=1" >Actividad 3. Diseño conceptual II</option>
+                    <option value="/mod/assign/view.php?id=29892&amp;forceview=1" >Actividad 4. Paso al modelo relacional</option>
+                    <option value="/mod/assign/view.php?id=30785&amp;forceview=1" >Actividad 5. Trabajo en grupo I. Nuestro propio negocio</option>
+                    <option value="/mod/assign/view.php?id=32582&amp;forceview=1" >Actividad 6. Trabajo en grupo II. Presentando nuestro negocio</option>
+                    <option value="/mod/assign/view.php?id=84803&amp;forceview=1" >Actividad 7. Trabajo en grupo III. Revisitando nuestro trabajo</option>
+                    <option value="/mod/assign/view.php?id=34949&amp;forceview=1" >UD1. Examen</option>
+                    <option value="/mod/assign/view.php?id=64076&amp;forceview=1" >Entrega adicional. Plan de recuperación UD1</option>
+                    <option value="/mod/assign/view.php?id=85593&amp;forceview=1" >Plan de recuperación UD1. Examen</option>
+                    <option value="/mod/resource/view.php?id=34811&amp;forceview=1" >2.1 Introducción y tipos de datos</option>
+                    <option value="/mod/resource/view.php?id=36231&amp;forceview=1" >2.2 Creación de bases de datos</option>
+                    <option value="/mod/resource/view.php?id=37170&amp;forceview=1" >2.3 Creación de bases de datos II</option>
+                    <option value="/mod/assign/view.php?id=35544&amp;forceview=1" >Actividad 1. Empezando a implementar</option>
+                    <option value="/mod/assign/view.php?id=36234&amp;forceview=1" >Actividad 2. Partiendo del modelo relacional</option>
+                    <option value="/mod/assign/view.php?id=37175&amp;forceview=1" >Actividad 3. Implementando nuestra idea</option>
+                    <option value="/mod/assign/view.php?id=38663&amp;forceview=1" >UD2. Examen</option>
+                    <option value="/mod/assign/view.php?id=65898&amp;forceview=1" >Entrega adicional. Plan de recuperación UD2</option>
+                    <option value="/mod/assign/view.php?id=66774&amp;forceview=1" >UD2. Examen de recuperación</option>
+                    <option value="/mod/resource/view.php?id=38823&amp;forceview=1" >UD3.1 Introducción</option>
+                    <option value="/mod/resource/view.php?id=39261&amp;forceview=1" >UD3.2 Consultas básicas</option>
+                    <option value="/mod/resource/view.php?id=41854&amp;forceview=1" >UD3.3 Consultas básicas II</option>
+                    <option value="/mod/resource/view.php?id=66150&amp;forceview=1" >UD3.4 Consultas avanzadas</option>
+                    <option value="/mod/resource/view.php?id=66746&amp;forceview=1" >UD3.5 Consultas avanzadas II</option>
+                    <option value="/mod/resource/view.php?id=43261&amp;forceview=1" >UD3.6 Consultas asociadas</option>
+                    <option value="/mod/resource/view.php?id=43754&amp;forceview=1" >UD3.7 Transacciones</option>
+                    <option value="/mod/resource/view.php?id=87144&amp;forceview=1" >UD3.8 Usuarios, permisos y vistas</option>
+                    <option value="/mod/resource/view.php?id=40865&amp;forceview=1" >Script Actividad 2</option>
+                    <option value="/mod/resource/view.php?id=46095&amp;forceview=1" >Script Actividad 5</option>
+                    <option value="/mod/assign/view.php?id=39263&amp;forceview=1" >Actividad 1. Manipulando datos</option>
+                    <option value="/mod/assign/view.php?id=40867&amp;forceview=1" >Actividad 2. Comenzamos con consultas</option>
+                    <option value="/mod/assign/view.php?id=41683&amp;forceview=1" >Actividad 3. Uso de la cláusula JOIN</option>
+                    <option value="/mod/assign/view.php?id=66888&amp;forceview=1" >Actividad 5. Asociando tablas</option>
+                    <option value="/mod/assign/view.php?id=87143&amp;forceview=1" >Actividad 6. Transacciones</option>
+                    <option value="/mod/assign/view.php?id=87511&amp;forceview=1" >Actividad 7. Vistas y permisos</option>
+                    <option value="/mod/assign/view.php?id=67794&amp;forceview=1" >Actividad 8. Trabajo en grupo IV. Consultando nuestra BBDD</option>
+        </select>
+            <noscript>
+                <input type="submit" class="btn btn-secondary ml-1" value="Ir">
+            </noscript>
+    </form>
+</div>
+
+        </div>
+</div>
+    <div class="col-md-4">        <div class="float-right">
+                <a href="https://auladecroly.com/mod/assign/view.php?id=66888&forceview=1" id="next-activity-link" class="btn btn-link" >Actividad 5. Asociando tablas &#x25BA;</a>
+
+        </div>
+</div>
+</div>
+</div>
+                    
+
+                </section>
+            </div>
+        </div>
+    </div>
+    <div
+    id="drawer-69b7c53d1cfe769b7c53d0809d18"
+    class=" drawer bg-white hidden"
+    aria-expanded="false"
+    aria-hidden="true"
+    data-region="right-hand-drawer"
+    role="region"
+    tabindex="0"
+>
+            <div id="message-drawer-69b7c53d1cfe769b7c53d0809d18" class="message-app" data-region="message-drawer" role="region">
+            <div class="closewidget d-flex flex-row align-items-center pr-2">
+                <span class="h6 mb-0 ml-2 mt-2 message-title">Mensajes</span>
+                <a class="text-dark btn-link ml-auto mt-2" data-action="closedrawer" href="#"
+                   title="Cerrar" aria-label="Cerrar"
+                >
+                    <i class="icon fa iconic-icon iconic-close fa-fw " aria-hidden="true"  ></i>
+                </a>
+            </div>
+            <div class="header-container position-relative" data-region="header-container">
+                <div class="hidden border-bottom p-1 px-sm-2" aria-hidden="true" data-region="view-contacts">
+                    <div class="d-flex align-items-center">
+                        <div class="align-self-stretch">
+                            <a class="h-100 d-flex align-items-center mr-2" href="#" data-route-back role="button">
+                                <div class="icon-back-in-drawer">
+                                    <span class="dir-rtl-hide"><i class="icon fa iconic-icon iconic-chevron-left fa-fw " aria-hidden="true"  ></i></span>
+                                    <span class="dir-ltr-hide"><i class="icon fa iconic-icon iconic-chevron-right fa-fw " aria-hidden="true"  ></i></span>
+                                </div>
+                                <div class="icon-back-in-app">
+                                    <span class="dir-rtl-hide"><i class="icon fa iconic-icon iconic-close fa-fw " aria-hidden="true"  ></i></span>
+                                </div>                            </a>
+                        </div>
+                        <div>
+                            Contactos
+                        </div>
+                        <div class="ml-auto">
+                            <a href="#" data-route="view-search" role="button" aria-label="Búsqueda">
+                                <i class="icon fa iconic-icon iconic-search fa-fw " aria-hidden="true"  ></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>                
+                <div
+                    class="hidden bg-white position-relative border-bottom p-1 px-sm-2 rounded-top"
+                    aria-hidden="true"
+                    data-region="view-conversation"
+                >
+                    <div class="hidden" data-region="header-content"></div>
+                    <div class="hidden" data-region="header-edit-mode">
+                        
+                        <div class="d-flex p-2 align-items-center">
+                            Mensajes seleccionados:
+                            <span class="ml-1" data-region="message-selected-court">1</span>
+                            <button type="button" class="ml-auto close" aria-label="Cancelar selección de mensaje"
+                                data-action="cancel-edit-mode">
+                                    <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div data-region="header-placeholder">
+                        <div class="d-flex">
+                            <div
+                                class="ml-2 rounded-circle bg-pulse-grey align-self-center"
+                                style="height: 38px; width: 38px"
+                            >
+                            </div>
+                            <div class="ml-2 " style="flex: 1">
+                                <div
+                                    class="mt-1 bg-pulse-grey w-75"
+                                    style="height: 16px;"
+                                >
+                                </div>
+                            </div>
+                            <div
+                                class="ml-2 bg-pulse-grey align-self-center"
+                                style="height: 16px; width: 20px"
+                            >
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="hidden position-absolute z-index-1"
+                        data-region="confirm-dialogue-container"
+                        style="top: 0; bottom: -1px; right: 0; left: 0; background: rgba(0,0,0,0.3);"
+                    ></div>
+                </div>
+                
+                <div class="hidden border-bottom p-1 px-sm-2 view-search"  aria-hidden="true" data-region="view-search">
+                    <div class="d-flex align-items-center">
+                        <a
+                            class="mr-2 align-self-stretch d-flex align-items-center"
+                            href="#"
+                            data-route-back
+                            data-action="cancel-search"
+                            role="button"
+                        >
+                            <div class="icon-back-in-drawer">
+                                <span class="dir-rtl-hide"><i class="icon fa iconic-icon iconic-chevron-left fa-fw " aria-hidden="true"  ></i></span>
+                                <span class="dir-ltr-hide"><i class="icon fa iconic-icon iconic-chevron-right fa-fw " aria-hidden="true"  ></i></span>
+                            </div>
+                            <div class="icon-back-in-app">
+                                <span class="dir-rtl-hide"><i class="icon fa iconic-icon iconic-close fa-fw " aria-hidden="true"  ></i></span>
+                            </div>                        </a>
+                        <div class="input-group simplesearchform">
+                            <input
+                                type="text"
+                                class="form-control"
+                                placeholder="Búsqueda"
+                                aria-label="Búsqueda"
+                                data-region="search-input"
+                            >
+                            <div class="input-group-append hidden">
+                                <button
+                                    class="btn btn-submit icon-no-margin"
+                                    type="button"
+                                    data-action="search"
+                                    aria-label="Búsqueda"
+                                >
+                                    <span data-region="search-icon-container">
+                                        <i class="icon fa iconic-icon iconic-search fa-fw " aria-hidden="true"  ></i>
+                                    </span>
+                                    <span class="hidden" data-region="loading-icon-container">
+                                        <span class="loading-icon icon-no-margin"><i class="icon fa fa-circle-o-notch fa-spin fa-fw "  title="Cargando" role="img" aria-label="Cargando"></i></span>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="border-bottom" aria-hidden="false"  data-region="view-overview">
+                    <div class="input-group simplesearchform">
+                        <input
+                            type="text"
+                            class="form-control"
+                            placeholder="Búsqueda"
+                            aria-label="Búsqueda"
+                            data-region="view-overview-search-input"
+                        >
+                        <div class="input-group-append hidden">
+                            <span class="icon-no-margin btn btn-submit">
+                                <i class="icon fa iconic-icon iconic-search fa-fw " aria-hidden="true"  ></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="d-flex">
+                        <div class="w-50 pr-2">
+                            <a href="#" data-route="view-contacts" role="button" class="btn-outline-secondary w-100 text-decoration-none d-inline-flex justify-content-center align-items-center">
+                                <span class="button-text">Contactos</span>
+                                <i class="icon fa iconic-icon iconic-user fa-fw " aria-hidden="true"  ></i>
+                                <span class="badge badge-primary bg-primary ml-2 hidden"
+                                data-region="contact-request-count"
+                                aria-label="Hay 0 solicitudes de contacto pendientes">
+                                    0
+                                </span>
+                            </a>
+                        </div>
+                        <div class="w-50 pl-2">
+                            <a
+                                href="#"
+                                data-route="view-settings"
+                                data-route-param="2076"
+                                aria-label="Ajustes"
+                                role="button"
+                                class="btn-outline-secondary w-100 text-decoration-none d-inline-flex justify-content-center align-items-center"
+                            >
+                                <span class="button-text">Configuración</span>
+                                <i class="icon fa iconic-icon iconic-settings fa-fw " aria-hidden="true"  ></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="hidden border-bottom p-1 px-sm-2 pb-sm-3" aria-hidden="true" data-region="view-settings">
+                    <div class="d-flex align-items-center">
+                        <div class="align-self-stretch" >
+                            <a class="h-100 d-flex mr-2 align-items-center" href="#" data-route-back role="button">
+                                <div class="icon-back-in-drawer">
+                                    <span class="dir-rtl-hide"><i class="icon fa iconic-icon iconic-chevron-left fa-fw " aria-hidden="true"  ></i></span>
+                                    <span class="dir-ltr-hide"><i class="icon fa iconic-icon iconic-chevron-right fa-fw " aria-hidden="true"  ></i></span>
+                                </div>
+                                <div class="icon-back-in-app">
+                                    <span class="dir-rtl-hide"><i class="icon fa iconic-icon iconic-close fa-fw " aria-hidden="true"  ></i></span>
+                                </div>                            </a>
+                        </div>
+                        <div>
+                            Configuración
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="body-container position-relative" data-region="body-container">
+                
+                <div
+                    class="hidden"
+                    data-region="view-contact"
+                    aria-hidden="true"
+                >
+                    <div class="p-2 pt-3" data-region="content-container"></div>
+                </div>                <div class="hidden h-100" data-region="view-contacts" aria-hidden="true" data-user-id="2076">
+                    <div class="d-flex flex-column h-100">
+                        <ul class="nav nav-tabs m-0 text-center" role="tablist">
+                            <li class="nav-item w-50">
+                                <a
+                                    id="contacts-tab-69b7c53d1cfe769b7c53d0809d18"
+                                    class="nav-link active"
+                                    href="#contacts-tab-panel-69b7c53d1cfe769b7c53d0809d18"
+                                    data-toggle="tab"
+                                    data-action="show-contacts-section"
+                                    role="tab"
+                                    aria-controls="contacts-tab-panel-69b7c53d1cfe769b7c53d0809d18"
+                                    aria-selected="true"
+                                >
+                                    Contactos
+                                </a>
+                            </li>
+                            <li class="nav-item w-50">
+                                <a
+                                    id="requests-tab-69b7c53d1cfe769b7c53d0809d18"
+                                    class="nav-link"
+                                    href="#requests-tab-panel-69b7c53d1cfe769b7c53d0809d18"
+                                    data-toggle="tab"
+                                    data-action="show-requests-section"
+                                    role="tab"
+                                    aria-controls="requests-tab-panel-69b7c53d1cfe769b7c53d0809d18"
+                                    aria-selected="false"
+                                >
+                                    Peticiones
+                                    <span class="badge badge-primary bg-primary ml-2 hidden"
+                                    data-region="contact-request-count"
+                                    aria-label="Hay 0 solicitudes de contacto pendientes">
+                                        0
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="tab-content d-flex flex-column h-100">
+                                            <div
+                    class="tab-pane fade show active h-100 lazy-load-list"
+                    aria-live="polite"
+                    data-region="lazy-load-list"
+                    data-user-id="2076"
+                                        id="contacts-tab-panel-69b7c53d1cfe769b7c53d0809d18"
+                    data-section="contacts"
+                    role="tabpanel"
+                    aria-labelledby="contacts-tab-69b7c53d1cfe769b7c53d0809d18"
+
+                >
+                    
+                    <div class="hidden text-center p-2" data-region="empty-message-container">
+                        No hay contactos
+                    </div>
+                    <div class="hidden list-group" data-region="content-container">
+                        
+                    </div>
+                    <div class="list-group" data-region="placeholder-container">
+                        
+                    </div>
+                    <div class="w-100 text-center p-3 hidden" data-region="loading-icon-container" >
+                        <span class="loading-icon icon-no-margin"><i class="icon fa fa-circle-o-notch fa-spin fa-fw "  title="Cargando" role="img" aria-label="Cargando"></i></span>
+                    </div>
+                </div>
+                
+                                            <div
+                    class="tab-pane fade h-100 lazy-load-list"
+                    aria-live="polite"
+                    data-region="lazy-load-list"
+                    data-user-id="2076"
+                                        id="requests-tab-panel-69b7c53d1cfe769b7c53d0809d18"
+                    data-section="requests"
+                    role="tabpanel"
+                    aria-labelledby="requests-tab-69b7c53d1cfe769b7c53d0809d18"
+
+                >
+                    
+                    <div class="hidden text-center p-2" data-region="empty-message-container">
+                        No hay solicitudes de contacto
+                    </div>
+                    <div class="hidden list-group" data-region="content-container">
+                        
+                    </div>
+                    <div class="list-group" data-region="placeholder-container">
+                        
+                    </div>
+                    <div class="w-100 text-center p-3 hidden" data-region="loading-icon-container" >
+                        <span class="loading-icon icon-no-margin"><i class="icon fa fa-circle-o-notch fa-spin fa-fw "  title="Cargando" role="img" aria-label="Cargando"></i></span>
+                    </div>
+                </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div
+                    class="view-conversation hidden h-100"
+                    aria-hidden="true"
+                    data-region="view-conversation"
+                    data-user-id="2076"
+                    data-midnight="1773615600"
+                    data-message-poll-min="10"
+                    data-message-poll-max="120"
+                    data-message-poll-after-max="300"
+                    style="overflow-y: auto; overflow-x: hidden"
+                >
+                    <div class="position-relative h-100" data-region="content-container" style="overflow-y: auto; overflow-x: hidden">
+                        <div class="content-message-container hidden h-100" data-region="content-message-container" role="log" style="overflow-y: auto; overflow-x: hidden">
+                            <div class="py-3 sticky-top z-index-1 border-bottom text-center hidden" data-region="contact-request-sent-message-container">
+                                <p class="m-0 bold">Solicitud de contacto enviada</p>
+                                <p class="font-weight-light" data-region="text"></p>
+                            </div>
+                            <div class="p-3 text-center hidden" data-region="self-conversation-message-container">
+                                <p class="m-0 bold">Espacio personal</p>
+                                <p class="font-weight-light" data-region="text">Guardar borradores de mensajes, notas, etc, para acceder a ellos más tarde.</p>
+                           </div>
+                            <div class="hidden text-center p-3" data-region="more-messages-loading-icon-container"><span class="loading-icon icon-no-margin"><i class="icon fa fa-circle-o-notch fa-spin fa-fw "  title="Cargando" role="img" aria-label="Cargando"></i></span>
+</div>
+                        </div>
+                        <div class="p-4 w-100 h-100 hidden position-absolute z-index-1" data-region="confirm-dialogue-container" style="top: 0; background: rgba(0,0,0,0.3);">
+                            
+                            <div class="p-3 bg-white" data-region="confirm-dialogue" role="alert">
+                                <p class="text-muted" data-region="dialogue-text"></p>
+                                <div class="mb-2 custom-control custom-checkbox hidden" data-region="delete-messages-for-all-users-toggle-container">
+                                    <input type="checkbox" class="custom-control-input" id="delete-messages-for-all-users" data-region="delete-messages-for-all-users-toggle">
+                                    <label class="custom-control-label text-muted" for="delete-messages-for-all-users">
+                                        Borrar para mí y para todos los demás
+                                    </label>
+                                </div>
+                                <button type="button" class="btn btn-primary btn-block hidden" data-action="confirm-block">
+                                    <span data-region="dialogue-button-text">Bloque</span>
+                                    <span class="hidden" data-region="loading-icon-container"><span class="loading-icon icon-no-margin"><i class="icon fa fa-circle-o-notch fa-spin fa-fw "  title="Cargando" role="img" aria-label="Cargando"></i></span>
+</span>
+                                </button>
+                                <button type="button" class="btn btn-primary btn-block hidden" data-action="confirm-unblock">
+                                    <span data-region="dialogue-button-text">Desbloquear</span>
+                                    <span class="hidden" data-region="loading-icon-container"><span class="loading-icon icon-no-margin"><i class="icon fa fa-circle-o-notch fa-spin fa-fw "  title="Cargando" role="img" aria-label="Cargando"></i></span>
+</span>
+                                </button>
+                                <button type="button" class="btn btn-primary btn-block hidden" data-action="confirm-remove-contact">
+                                    <span data-region="dialogue-button-text">Quitar</span>
+                                    <span class="hidden" data-region="loading-icon-container"><span class="loading-icon icon-no-margin"><i class="icon fa fa-circle-o-notch fa-spin fa-fw "  title="Cargando" role="img" aria-label="Cargando"></i></span>
+</span>
+                                </button>
+                                <button type="button" class="btn btn-primary btn-block hidden" data-action="confirm-add-contact">
+                                    <span data-region="dialogue-button-text">Añadir</span>
+                                    <span class="hidden" data-region="loading-icon-container"><span class="loading-icon icon-no-margin"><i class="icon fa fa-circle-o-notch fa-spin fa-fw "  title="Cargando" role="img" aria-label="Cargando"></i></span>
+</span>
+                                </button>
+                                <button type="button" class="btn btn-primary btn-block hidden" data-action="confirm-delete-selected-messages">
+                                    <span data-region="dialogue-button-text">Borrar</span>
+                                    <span class="hidden" data-region="loading-icon-container"><span class="loading-icon icon-no-margin"><i class="icon fa fa-circle-o-notch fa-spin fa-fw "  title="Cargando" role="img" aria-label="Cargando"></i></span>
+</span>
+                                </button>
+                                <button type="button" class="btn btn-primary btn-block hidden" data-action="confirm-delete-conversation">
+                                    <span data-region="dialogue-button-text">Borrar</span>
+                                    <span class="hidden" data-region="loading-icon-container"><span class="loading-icon icon-no-margin"><i class="icon fa fa-circle-o-notch fa-spin fa-fw "  title="Cargando" role="img" aria-label="Cargando"></i></span>
+</span>
+                                </button>
+                                <button type="button" class="btn btn-primary btn-block hidden" data-action="request-add-contact">
+                                    <span data-region="dialogue-button-text">Enviar solicitud de contacto</span>
+                                    <span class="hidden" data-region="loading-icon-container"><span class="loading-icon icon-no-margin"><i class="icon fa fa-circle-o-notch fa-spin fa-fw "  title="Cargando" role="img" aria-label="Cargando"></i></span>
+</span>
+                                </button>
+                                <button type="button" class="btn btn-primary btn-block hidden" data-action="accept-contact-request">
+                                    <span data-region="dialogue-button-text">Aceptar y añadir a los contactos</span>
+                                    <span class="hidden" data-region="loading-icon-container"><span class="loading-icon icon-no-margin"><i class="icon fa fa-circle-o-notch fa-spin fa-fw "  title="Cargando" role="img" aria-label="Cargando"></i></span>
+</span>
+                                </button>
+                                <button type="button" class="btn btn-secondary btn-block hidden" data-action="decline-contact-request">
+                                    <span data-region="dialogue-button-text">Rechazar</span>
+                                    <span class="hidden" data-region="loading-icon-container"><span class="loading-icon icon-no-margin"><i class="icon fa fa-circle-o-notch fa-spin fa-fw "  title="Cargando" role="img" aria-label="Cargando"></i></span>
+</span>
+                                </button>
+                                <button type="button" class="btn btn-primary btn-block" data-action="okay-confirm">OK</button>
+                                <button type="button" class="btn btn-secondary btn-block" data-action="cancel-confirm">Cancelar</button>
+                            </div>
+                        </div>
+                        <div class="px-2 pb-2 pt-0" data-region="content-placeholder">
+                            <div class="h-100 d-flex flex-column">
+                                <div
+                                    class="px-2 pb-2 pt-0 bg-light h-100"
+                                    style="overflow-y: auto"
+                                >
+                                    <div class="mt-4">
+                                        <div class="mb-4">
+                                            <div class="mx-auto bg-white" style="height: 25px; width: 100px"></div>
+                                        </div>
+                                        <div class="d-flex flex-column p-2 bg-white rounded mb-2">
+                                            <div class="d-flex align-items-center mb-2">
+                                                <div class="mr-2">
+                                                    <div class="rounded-circle bg-pulse-grey" style="height: 35px; width: 35px"></div>
+                                                </div>
+                                                <div class="mr-4 w-75 bg-pulse-grey" style="height: 16px"></div>
+                                                <div class="ml-auto bg-pulse-grey" style="width: 35px; height: 16px"></div>
+                                            </div>
+                                            <div class="bg-pulse-grey w-100" style="height: 16px"></div>
+                                            <div class="bg-pulse-grey w-100 mt-2" style="height: 16px"></div>
+                                            <div class="bg-pulse-grey w-100 mt-2" style="height: 16px"></div>
+                                            <div class="bg-pulse-grey w-100 mt-2" style="height: 16px"></div>
+                                            <div class="bg-pulse-grey w-75 mt-2" style="height: 16px"></div>
+                                        </div>
+                                        <div class="d-flex flex-column p-2 bg-white rounded mb-2">
+                                            <div class="d-flex align-items-center mb-2">
+                                                <div class="mr-2">
+                                                    <div class="rounded-circle bg-pulse-grey" style="height: 35px; width: 35px"></div>
+                                                </div>
+                                                <div class="mr-4 w-75 bg-pulse-grey" style="height: 16px"></div>
+                                                <div class="ml-auto bg-pulse-grey" style="width: 35px; height: 16px"></div>
+                                            </div>
+                                            <div class="bg-pulse-grey w-100" style="height: 16px"></div>
+                                            <div class="bg-pulse-grey w-100 mt-2" style="height: 16px"></div>
+                                            <div class="bg-pulse-grey w-100 mt-2" style="height: 16px"></div>
+                                            <div class="bg-pulse-grey w-100 mt-2" style="height: 16px"></div>
+                                            <div class="bg-pulse-grey w-75 mt-2" style="height: 16px"></div>
+                                        </div>
+                                        <div class="d-flex flex-column p-2 bg-white rounded mb-2">
+                                            <div class="d-flex align-items-center mb-2">
+                                                <div class="mr-2">
+                                                    <div class="rounded-circle bg-pulse-grey" style="height: 35px; width: 35px"></div>
+                                                </div>
+                                                <div class="mr-4 w-75 bg-pulse-grey" style="height: 16px"></div>
+                                                <div class="ml-auto bg-pulse-grey" style="width: 35px; height: 16px"></div>
+                                            </div>
+                                            <div class="bg-pulse-grey w-100" style="height: 16px"></div>
+                                            <div class="bg-pulse-grey w-100 mt-2" style="height: 16px"></div>
+                                            <div class="bg-pulse-grey w-100 mt-2" style="height: 16px"></div>
+                                            <div class="bg-pulse-grey w-100 mt-2" style="height: 16px"></div>
+                                            <div class="bg-pulse-grey w-75 mt-2" style="height: 16px"></div>
+                                        </div>
+                                    </div>                                    <div class="mt-4">
+                                        <div class="mb-4">
+                                            <div class="mx-auto bg-white" style="height: 25px; width: 100px"></div>
+                                        </div>
+                                        <div class="d-flex flex-column p-2 bg-white rounded mb-2">
+                                            <div class="d-flex align-items-center mb-2">
+                                                <div class="mr-2">
+                                                    <div class="rounded-circle bg-pulse-grey" style="height: 35px; width: 35px"></div>
+                                                </div>
+                                                <div class="mr-4 w-75 bg-pulse-grey" style="height: 16px"></div>
+                                                <div class="ml-auto bg-pulse-grey" style="width: 35px; height: 16px"></div>
+                                            </div>
+                                            <div class="bg-pulse-grey w-100" style="height: 16px"></div>
+                                            <div class="bg-pulse-grey w-100 mt-2" style="height: 16px"></div>
+                                            <div class="bg-pulse-grey w-100 mt-2" style="height: 16px"></div>
+                                            <div class="bg-pulse-grey w-100 mt-2" style="height: 16px"></div>
+                                            <div class="bg-pulse-grey w-75 mt-2" style="height: 16px"></div>
+                                        </div>
+                                        <div class="d-flex flex-column p-2 bg-white rounded mb-2">
+                                            <div class="d-flex align-items-center mb-2">
+                                                <div class="mr-2">
+                                                    <div class="rounded-circle bg-pulse-grey" style="height: 35px; width: 35px"></div>
+                                                </div>
+                                                <div class="mr-4 w-75 bg-pulse-grey" style="height: 16px"></div>
+                                                <div class="ml-auto bg-pulse-grey" style="width: 35px; height: 16px"></div>
+                                            </div>
+                                            <div class="bg-pulse-grey w-100" style="height: 16px"></div>
+                                            <div class="bg-pulse-grey w-100 mt-2" style="height: 16px"></div>
+                                            <div class="bg-pulse-grey w-100 mt-2" style="height: 16px"></div>
+                                            <div class="bg-pulse-grey w-100 mt-2" style="height: 16px"></div>
+                                            <div class="bg-pulse-grey w-75 mt-2" style="height: 16px"></div>
+                                        </div>
+                                        <div class="d-flex flex-column p-2 bg-white rounded mb-2">
+                                            <div class="d-flex align-items-center mb-2">
+                                                <div class="mr-2">
+                                                    <div class="rounded-circle bg-pulse-grey" style="height: 35px; width: 35px"></div>
+                                                </div>
+                                                <div class="mr-4 w-75 bg-pulse-grey" style="height: 16px"></div>
+                                                <div class="ml-auto bg-pulse-grey" style="width: 35px; height: 16px"></div>
+                                            </div>
+                                            <div class="bg-pulse-grey w-100" style="height: 16px"></div>
+                                            <div class="bg-pulse-grey w-100 mt-2" style="height: 16px"></div>
+                                            <div class="bg-pulse-grey w-100 mt-2" style="height: 16px"></div>
+                                            <div class="bg-pulse-grey w-100 mt-2" style="height: 16px"></div>
+                                            <div class="bg-pulse-grey w-75 mt-2" style="height: 16px"></div>
+                                        </div>
+                                    </div>                                    <div class="mt-4">
+                                        <div class="mb-4">
+                                            <div class="mx-auto bg-white" style="height: 25px; width: 100px"></div>
+                                        </div>
+                                        <div class="d-flex flex-column p-2 bg-white rounded mb-2">
+                                            <div class="d-flex align-items-center mb-2">
+                                                <div class="mr-2">
+                                                    <div class="rounded-circle bg-pulse-grey" style="height: 35px; width: 35px"></div>
+                                                </div>
+                                                <div class="mr-4 w-75 bg-pulse-grey" style="height: 16px"></div>
+                                                <div class="ml-auto bg-pulse-grey" style="width: 35px; height: 16px"></div>
+                                            </div>
+                                            <div class="bg-pulse-grey w-100" style="height: 16px"></div>
+                                            <div class="bg-pulse-grey w-100 mt-2" style="height: 16px"></div>
+                                            <div class="bg-pulse-grey w-100 mt-2" style="height: 16px"></div>
+                                            <div class="bg-pulse-grey w-100 mt-2" style="height: 16px"></div>
+                                            <div class="bg-pulse-grey w-75 mt-2" style="height: 16px"></div>
+                                        </div>
+                                        <div class="d-flex flex-column p-2 bg-white rounded mb-2">
+                                            <div class="d-flex align-items-center mb-2">
+                                                <div class="mr-2">
+                                                    <div class="rounded-circle bg-pulse-grey" style="height: 35px; width: 35px"></div>
+                                                </div>
+                                                <div class="mr-4 w-75 bg-pulse-grey" style="height: 16px"></div>
+                                                <div class="ml-auto bg-pulse-grey" style="width: 35px; height: 16px"></div>
+                                            </div>
+                                            <div class="bg-pulse-grey w-100" style="height: 16px"></div>
+                                            <div class="bg-pulse-grey w-100 mt-2" style="height: 16px"></div>
+                                            <div class="bg-pulse-grey w-100 mt-2" style="height: 16px"></div>
+                                            <div class="bg-pulse-grey w-100 mt-2" style="height: 16px"></div>
+                                            <div class="bg-pulse-grey w-75 mt-2" style="height: 16px"></div>
+                                        </div>
+                                        <div class="d-flex flex-column p-2 bg-white rounded mb-2">
+                                            <div class="d-flex align-items-center mb-2">
+                                                <div class="mr-2">
+                                                    <div class="rounded-circle bg-pulse-grey" style="height: 35px; width: 35px"></div>
+                                                </div>
+                                                <div class="mr-4 w-75 bg-pulse-grey" style="height: 16px"></div>
+                                                <div class="ml-auto bg-pulse-grey" style="width: 35px; height: 16px"></div>
+                                            </div>
+                                            <div class="bg-pulse-grey w-100" style="height: 16px"></div>
+                                            <div class="bg-pulse-grey w-100 mt-2" style="height: 16px"></div>
+                                            <div class="bg-pulse-grey w-100 mt-2" style="height: 16px"></div>
+                                            <div class="bg-pulse-grey w-100 mt-2" style="height: 16px"></div>
+                                            <div class="bg-pulse-grey w-75 mt-2" style="height: 16px"></div>
+                                        </div>
+                                    </div>                                    <div class="mt-4">
+                                        <div class="mb-4">
+                                            <div class="mx-auto bg-white" style="height: 25px; width: 100px"></div>
+                                        </div>
+                                        <div class="d-flex flex-column p-2 bg-white rounded mb-2">
+                                            <div class="d-flex align-items-center mb-2">
+                                                <div class="mr-2">
+                                                    <div class="rounded-circle bg-pulse-grey" style="height: 35px; width: 35px"></div>
+                                                </div>
+                                                <div class="mr-4 w-75 bg-pulse-grey" style="height: 16px"></div>
+                                                <div class="ml-auto bg-pulse-grey" style="width: 35px; height: 16px"></div>
+                                            </div>
+                                            <div class="bg-pulse-grey w-100" style="height: 16px"></div>
+                                            <div class="bg-pulse-grey w-100 mt-2" style="height: 16px"></div>
+                                            <div class="bg-pulse-grey w-100 mt-2" style="height: 16px"></div>
+                                            <div class="bg-pulse-grey w-100 mt-2" style="height: 16px"></div>
+                                            <div class="bg-pulse-grey w-75 mt-2" style="height: 16px"></div>
+                                        </div>
+                                        <div class="d-flex flex-column p-2 bg-white rounded mb-2">
+                                            <div class="d-flex align-items-center mb-2">
+                                                <div class="mr-2">
+                                                    <div class="rounded-circle bg-pulse-grey" style="height: 35px; width: 35px"></div>
+                                                </div>
+                                                <div class="mr-4 w-75 bg-pulse-grey" style="height: 16px"></div>
+                                                <div class="ml-auto bg-pulse-grey" style="width: 35px; height: 16px"></div>
+                                            </div>
+                                            <div class="bg-pulse-grey w-100" style="height: 16px"></div>
+                                            <div class="bg-pulse-grey w-100 mt-2" style="height: 16px"></div>
+                                            <div class="bg-pulse-grey w-100 mt-2" style="height: 16px"></div>
+                                            <div class="bg-pulse-grey w-100 mt-2" style="height: 16px"></div>
+                                            <div class="bg-pulse-grey w-75 mt-2" style="height: 16px"></div>
+                                        </div>
+                                        <div class="d-flex flex-column p-2 bg-white rounded mb-2">
+                                            <div class="d-flex align-items-center mb-2">
+                                                <div class="mr-2">
+                                                    <div class="rounded-circle bg-pulse-grey" style="height: 35px; width: 35px"></div>
+                                                </div>
+                                                <div class="mr-4 w-75 bg-pulse-grey" style="height: 16px"></div>
+                                                <div class="ml-auto bg-pulse-grey" style="width: 35px; height: 16px"></div>
+                                            </div>
+                                            <div class="bg-pulse-grey w-100" style="height: 16px"></div>
+                                            <div class="bg-pulse-grey w-100 mt-2" style="height: 16px"></div>
+                                            <div class="bg-pulse-grey w-100 mt-2" style="height: 16px"></div>
+                                            <div class="bg-pulse-grey w-100 mt-2" style="height: 16px"></div>
+                                            <div class="bg-pulse-grey w-75 mt-2" style="height: 16px"></div>
+                                        </div>
+                                    </div>                                    <div class="mt-4">
+                                        <div class="mb-4">
+                                            <div class="mx-auto bg-white" style="height: 25px; width: 100px"></div>
+                                        </div>
+                                        <div class="d-flex flex-column p-2 bg-white rounded mb-2">
+                                            <div class="d-flex align-items-center mb-2">
+                                                <div class="mr-2">
+                                                    <div class="rounded-circle bg-pulse-grey" style="height: 35px; width: 35px"></div>
+                                                </div>
+                                                <div class="mr-4 w-75 bg-pulse-grey" style="height: 16px"></div>
+                                                <div class="ml-auto bg-pulse-grey" style="width: 35px; height: 16px"></div>
+                                            </div>
+                                            <div class="bg-pulse-grey w-100" style="height: 16px"></div>
+                                            <div class="bg-pulse-grey w-100 mt-2" style="height: 16px"></div>
+                                            <div class="bg-pulse-grey w-100 mt-2" style="height: 16px"></div>
+                                            <div class="bg-pulse-grey w-100 mt-2" style="height: 16px"></div>
+                                            <div class="bg-pulse-grey w-75 mt-2" style="height: 16px"></div>
+                                        </div>
+                                        <div class="d-flex flex-column p-2 bg-white rounded mb-2">
+                                            <div class="d-flex align-items-center mb-2">
+                                                <div class="mr-2">
+                                                    <div class="rounded-circle bg-pulse-grey" style="height: 35px; width: 35px"></div>
+                                                </div>
+                                                <div class="mr-4 w-75 bg-pulse-grey" style="height: 16px"></div>
+                                                <div class="ml-auto bg-pulse-grey" style="width: 35px; height: 16px"></div>
+                                            </div>
+                                            <div class="bg-pulse-grey w-100" style="height: 16px"></div>
+                                            <div class="bg-pulse-grey w-100 mt-2" style="height: 16px"></div>
+                                            <div class="bg-pulse-grey w-100 mt-2" style="height: 16px"></div>
+                                            <div class="bg-pulse-grey w-100 mt-2" style="height: 16px"></div>
+                                            <div class="bg-pulse-grey w-75 mt-2" style="height: 16px"></div>
+                                        </div>
+                                        <div class="d-flex flex-column p-2 bg-white rounded mb-2">
+                                            <div class="d-flex align-items-center mb-2">
+                                                <div class="mr-2">
+                                                    <div class="rounded-circle bg-pulse-grey" style="height: 35px; width: 35px"></div>
+                                                </div>
+                                                <div class="mr-4 w-75 bg-pulse-grey" style="height: 16px"></div>
+                                                <div class="ml-auto bg-pulse-grey" style="width: 35px; height: 16px"></div>
+                                            </div>
+                                            <div class="bg-pulse-grey w-100" style="height: 16px"></div>
+                                            <div class="bg-pulse-grey w-100 mt-2" style="height: 16px"></div>
+                                            <div class="bg-pulse-grey w-100 mt-2" style="height: 16px"></div>
+                                            <div class="bg-pulse-grey w-100 mt-2" style="height: 16px"></div>
+                                            <div class="bg-pulse-grey w-75 mt-2" style="height: 16px"></div>
+                                        </div>
+                                    </div>                                </div>
+                            </div>                        </div>
+                    </div>
+                </div>
+                
+                <div
+                    class="hidden"
+                    aria-hidden="true"
+                    data-region="view-group-info"
+                >
+                    <div
+                        class="pt-3 h-100 d-flex flex-column"
+                        data-region="group-info-content-container"
+                        style="overflow-y: auto"
+                    ></div>
+                </div>                <div class="h-100 view-overview-body" aria-hidden="false" data-region="view-overview"  data-user-id="2076">
+                    <div id="message-drawer-view-overview-container-69b7c53d1cfe769b7c53d0809d18" class="d-flex flex-column h-100" style="overflow-y: auto">
+                            
+                            
+                            <div
+                                class="section border-0 card"
+                                data-region="view-overview-favourites"
+                            >
+                                <div id="view-overview-favourites-toggle" class="card-header p-0" data-region="toggle">
+                                    <button
+                                        class="btn btn-link w-100 text-left p-1 p-sm-2 d-flex align-items-center overview-section-toggle collapsed"
+                                        data-toggle="collapse"
+                                        data-target="#view-overview-favourites-target-69b7c53d1cfe769b7c53d0809d18"
+                                        aria-expanded="false"
+                                        aria-controls="view-overview-favourites-target-69b7c53d1cfe769b7c53d0809d18"
+                                    >
+                                        <span class="collapsed-icon-container">
+                                            <i class="icon fa iconic-icon iconic-carat-down iconic-270 fa-fw " aria-hidden="true"  ></i>
+                                        </span>
+                                        <span class="expanded-icon-container">
+                                            <i class="icon fa iconic-icon iconic-carat-down fa-fw " aria-hidden="true"  ></i>
+                                        </span>
+                                        <span class="font-weight-bold">Destacados</span>
+                                        <small class="hidden ml-1" data-region="section-total-count-container"
+                                        aria-label=" conversaciones en total">
+                                            (<span data-region="section-total-count"></span>)
+                                        </small>
+                                        <span class="hidden ml-2" data-region="loading-icon-container">
+                                            <span class="loading-icon icon-no-margin"><i class="icon fa fa-circle-o-notch fa-spin fa-fw "  title="Cargando" role="img" aria-label="Cargando"></i></span>
+                                        </span>
+                                        <span class="hidden badge badge-pill badge-primary ml-auto bg-primary hidden"
+                                        data-region="section-unread-count"
+                                        >
+                                            
+                                        </span>
+                                    </button>
+                                </div>
+                                                            <div
+                                class="collapse border-bottom  lazy-load-list"
+                                aria-live="polite"
+                                data-region="lazy-load-list"
+                                data-user-id="2076"
+                                            id="view-overview-favourites-target-69b7c53d1cfe769b7c53d0809d18"
+            aria-labelledby="view-overview-favourites-toggle"
+            data-parent="#message-drawer-view-overview-container-69b7c53d1cfe769b7c53d0809d18"
+
+                            >
+                                
+                                <div class="hidden text-center p-2" data-region="empty-message-container">
+                                            <p class="text-muted mt-2">Sin conversaciones destacadas</p>
+
+                                </div>
+                                <div class="hidden list-group" data-region="content-container">
+                                    
+                                </div>
+                                <div class="list-group" data-region="placeholder-container">
+                                            <div class="text-center py-2"><span class="loading-icon icon-no-margin"><i class="icon fa fa-circle-o-notch fa-spin fa-fw "  title="Cargando" role="img" aria-label="Cargando"></i></span>
+</div>
+
+                                </div>
+                                <div class="w-100 text-center p-3 hidden" data-region="loading-icon-container" >
+                                    <span class="loading-icon icon-no-margin"><i class="icon fa fa-circle-o-notch fa-spin fa-fw "  title="Cargando" role="img" aria-label="Cargando"></i></span>
+                                </div>
+                            </div>
+                            </div>
+                            
+                            
+                            <div
+                                class="section border-0 card"
+                                data-region="view-overview-group-messages"
+                            >
+                                <div id="view-overview-group-messages-toggle" class="card-header p-0" data-region="toggle">
+                                    <button
+                                        class="btn btn-link w-100 text-left p-1 p-sm-2 d-flex align-items-center overview-section-toggle collapsed"
+                                        data-toggle="collapse"
+                                        data-target="#view-overview-group-messages-target-69b7c53d1cfe769b7c53d0809d18"
+                                        aria-expanded="false"
+                                        aria-controls="view-overview-group-messages-target-69b7c53d1cfe769b7c53d0809d18"
+                                    >
+                                        <span class="collapsed-icon-container">
+                                            <i class="icon fa iconic-icon iconic-carat-down iconic-270 fa-fw " aria-hidden="true"  ></i>
+                                        </span>
+                                        <span class="expanded-icon-container">
+                                            <i class="icon fa iconic-icon iconic-carat-down fa-fw " aria-hidden="true"  ></i>
+                                        </span>
+                                        <span class="font-weight-bold">Grupo</span>
+                                        <small class="hidden ml-1" data-region="section-total-count-container"
+                                        aria-label=" conversaciones en total">
+                                            (<span data-region="section-total-count"></span>)
+                                        </small>
+                                        <span class="hidden ml-2" data-region="loading-icon-container">
+                                            <span class="loading-icon icon-no-margin"><i class="icon fa fa-circle-o-notch fa-spin fa-fw "  title="Cargando" role="img" aria-label="Cargando"></i></span>
+                                        </span>
+                                        <span class="hidden badge badge-pill badge-primary ml-auto bg-primary hidden"
+                                        data-region="section-unread-count"
+                                        >
+                                            
+                                        </span>
+                                    </button>
+                                </div>
+                                                            <div
+                                class="collapse border-bottom  lazy-load-list"
+                                aria-live="polite"
+                                data-region="lazy-load-list"
+                                data-user-id="2076"
+                                            id="view-overview-group-messages-target-69b7c53d1cfe769b7c53d0809d18"
+            aria-labelledby="view-overview-group-messages-toggle"
+            data-parent="#message-drawer-view-overview-container-69b7c53d1cfe769b7c53d0809d18"
+
+                            >
+                                
+                                <div class="hidden text-center p-2" data-region="empty-message-container">
+                                            <p class="text-muted mt-2">No hay conversaciónes de grupo</p>
+
+                                </div>
+                                <div class="hidden list-group" data-region="content-container">
+                                    
+                                </div>
+                                <div class="list-group" data-region="placeholder-container">
+                                            <div class="text-center py-2"><span class="loading-icon icon-no-margin"><i class="icon fa fa-circle-o-notch fa-spin fa-fw "  title="Cargando" role="img" aria-label="Cargando"></i></span>
+</div>
+
+                                </div>
+                                <div class="w-100 text-center p-3 hidden" data-region="loading-icon-container" >
+                                    <span class="loading-icon icon-no-margin"><i class="icon fa fa-circle-o-notch fa-spin fa-fw "  title="Cargando" role="img" aria-label="Cargando"></i></span>
+                                </div>
+                            </div>
+                            </div>
+                            
+                            
+                            <div
+                                class="section border-0 card"
+                                data-region="view-overview-messages"
+                            >
+                                <div id="view-overview-messages-toggle" class="card-header p-0" data-region="toggle">
+                                    <button
+                                        class="btn btn-link w-100 text-left p-1 p-sm-2 d-flex align-items-center overview-section-toggle collapsed"
+                                        data-toggle="collapse"
+                                        data-target="#view-overview-messages-target-69b7c53d1cfe769b7c53d0809d18"
+                                        aria-expanded="false"
+                                        aria-controls="view-overview-messages-target-69b7c53d1cfe769b7c53d0809d18"
+                                    >
+                                        <span class="collapsed-icon-container">
+                                            <i class="icon fa iconic-icon iconic-carat-down iconic-270 fa-fw " aria-hidden="true"  ></i>
+                                        </span>
+                                        <span class="expanded-icon-container">
+                                            <i class="icon fa iconic-icon iconic-carat-down fa-fw " aria-hidden="true"  ></i>
+                                        </span>
+                                        <span class="font-weight-bold">Privado</span>
+                                        <small class="hidden ml-1" data-region="section-total-count-container"
+                                        aria-label=" conversaciones en total">
+                                            (<span data-region="section-total-count"></span>)
+                                        </small>
+                                        <span class="hidden ml-2" data-region="loading-icon-container">
+                                            <span class="loading-icon icon-no-margin"><i class="icon fa fa-circle-o-notch fa-spin fa-fw "  title="Cargando" role="img" aria-label="Cargando"></i></span>
+                                        </span>
+                                        <span class="hidden badge badge-pill badge-primary ml-auto bg-primary hidden"
+                                        data-region="section-unread-count"
+                                        >
+                                            
+                                        </span>
+                                    </button>
+                                </div>
+                                                            <div
+                                class="collapse border-bottom  lazy-load-list"
+                                aria-live="polite"
+                                data-region="lazy-load-list"
+                                data-user-id="2076"
+                                            id="view-overview-messages-target-69b7c53d1cfe769b7c53d0809d18"
+            aria-labelledby="view-overview-messages-toggle"
+            data-parent="#message-drawer-view-overview-container-69b7c53d1cfe769b7c53d0809d18"
+
+                            >
+                                
+                                <div class="hidden text-center p-2" data-region="empty-message-container">
+                                            <p class="text-muted mt-2">No hay conversaciones privadas</p>
+
+                                </div>
+                                <div class="hidden list-group" data-region="content-container">
+                                    
+                                </div>
+                                <div class="list-group" data-region="placeholder-container">
+                                            <div class="text-center py-2"><span class="loading-icon icon-no-margin"><i class="icon fa fa-circle-o-notch fa-spin fa-fw "  title="Cargando" role="img" aria-label="Cargando"></i></span>
+</div>
+
+                                </div>
+                                <div class="w-100 text-center p-3 hidden" data-region="loading-icon-container" >
+                                    <span class="loading-icon icon-no-margin"><i class="icon fa fa-circle-o-notch fa-spin fa-fw "  title="Cargando" role="img" aria-label="Cargando"></i></span>
+                                </div>
+                            </div>
+                            </div>
+                    </div>
+                </div>
+                
+                <div
+                    data-region="view-search"
+                    aria-hidden="true"
+                    class="h-100 hidden"
+                    data-user-id="2076"
+                    data-users-offset="0"
+                    data-messages-offset="0"
+                    style="overflow-y: auto"
+                    
+                >
+                    <div class="hidden" data-region="search-results-container" style="overflow-y: auto">
+                        
+                        <div class="d-flex flex-column">
+                            <div class="mb-3 bg-white" data-region="all-contacts-container">
+                                <div data-region="contacts-container"  class="pt-2">
+                                    <h4 class="h6 px-2">Contactos</h4>
+                                    <div class="list-group" data-region="list"></div>
+                                </div>
+                                <div data-region="non-contacts-container" class="pt-2 border-top">
+                                    <h4 class="h6 px-2">No contactos</h4>
+                                    <div class="list-group" data-region="list"></div>
+                                </div>
+                                <div class="text-right">
+                                    <button class="btn btn-link text-primary" data-action="load-more-users">
+                                        <span data-region="button-text">Cargar más</span>
+                                        <span data-region="loading-icon-container" class="hidden"><span class="loading-icon icon-no-margin"><i class="icon fa fa-circle-o-notch fa-spin fa-fw "  title="Cargando" role="img" aria-label="Cargando"></i></span>
+</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="bg-white" data-region="messages-container">
+                                <h4 class="h6 px-2 pt-2">Mensajes</h4>
+                                <div class="list-group" data-region="list"></div>
+                                <div class="text-right">
+                                    <button class="btn btn-link text-primary" data-action="load-more-messages">
+                                        <span data-region="button-text">Cargar más</span>
+                                        <span data-region="loading-icon-container" class="hidden"><span class="loading-icon icon-no-margin"><i class="icon fa fa-circle-o-notch fa-spin fa-fw "  title="Cargando" role="img" aria-label="Cargando"></i></span>
+</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <p class="hidden p-3 text-center" data-region="no-results-container">No hay resultados</p>
+                        </div>                    </div>
+                    <div class="hidden" data-region="loading-placeholder">
+                        <div class="text-center pt-3 icon-size-4"><span class="loading-icon icon-no-margin"><i class="icon fa fa-circle-o-notch fa-spin fa-fw "  title="Cargando" role="img" aria-label="Cargando"></i></span>
+</div>
+                    </div>
+                    <div class="p-3 text-center" data-region="empty-message-container">
+                        <p>Buscar personas y mensajes</p>
+                    </div>
+                </div>                
+                <div class="h-100 hidden bg-white" aria-hidden="true" data-region="view-settings">
+                    <div class="hidden" data-region="content-container">
+                        
+                        <div data-region="settings" class="p-3">
+                            <h3 class="h6 font-weight-bold">Privacidad</h3>
+                            <p>Puedes restringir quién puede enviarte mensajes</p>
+                            <div data-preference="blocknoncontacts" class="mb-3">
+                                <fieldset>
+                                    <legend class="sr-only">Aceptar mensajes desde:</legend>
+                                        <div class="custom-control custom-radio mb-2">
+                                            <input
+                                                type="radio"
+                                                name="message_blocknoncontacts"
+                                                class="custom-control-input"
+                                                id="block-noncontacts-69b7c53d1cfe769b7c53d0809d18-1"
+                                                value="1"
+                                            >
+                                            <label class="custom-control-label ml-2" for="block-noncontacts-69b7c53d1cfe769b7c53d0809d18-1">
+                                                Únicamente mis contactos
+                                            </label>
+                                        </div>
+                                        <div class="custom-control custom-radio mb-2">
+                                            <input
+                                                type="radio"
+                                                name="message_blocknoncontacts"
+                                                class="custom-control-input"
+                                                id="block-noncontacts-69b7c53d1cfe769b7c53d0809d18-0"
+                                                value="0"
+                                            >
+                                            <label class="custom-control-label ml-2" for="block-noncontacts-69b7c53d1cfe769b7c53d0809d18-0">
+                                                Mis contactos y cualquier persona de mis cursos
+                                            </label>
+                                        </div>
+                                </fieldset>
+                            </div>
+                        
+                            <div class="hidden" data-region="notification-preference-container">
+                                <h3 class="mb-2 mt-4 h6 font-weight-bold">Preferencias de notificación</h3>
+                            </div>
+                        
+                            <h3 class="mb-2 mt-4 h6 font-weight-bold">General</h3>
+                            <div data-preference="entertosend">
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="enter-to-send-69b7c53d1cfe769b7c53d0809d18" checked>
+                                    <label class="custom-control-label" for="enter-to-send-69b7c53d1cfe769b7c53d0809d18">
+                                        Usar "intro" para enviar
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div data-region="placeholder-container">
+                        
+                        <div class="d-flex flex-column p-3">
+                            <div class="w-25 bg-pulse-grey h6" style="height: 18px"></div>
+                            <div class="w-75 bg-pulse-grey mb-4" style="height: 18px"></div>
+                            <div class="mb-3">
+                                <div class="w-100 d-flex mb-3">
+                                    <div class="bg-pulse-grey rounded-circle" style="width: 18px; height: 18px"></div>
+                                    <div class="bg-pulse-grey w-50 ml-2" style="height: 18px"></div>
+                                </div>
+                                <div class="w-100 d-flex mb-3">
+                                    <div class="bg-pulse-grey rounded-circle" style="width: 18px; height: 18px"></div>
+                                    <div class="bg-pulse-grey w-50 ml-2" style="height: 18px"></div>
+                                </div>
+                                <div class="w-100 d-flex mb-3">
+                                    <div class="bg-pulse-grey rounded-circle" style="width: 18px; height: 18px"></div>
+                                    <div class="bg-pulse-grey w-50 ml-2" style="height: 18px"></div>
+                                </div>
+                            </div>
+                            <div class="w-50 bg-pulse-grey h6 mb-3 mt-2" style="height: 18px"></div>
+                            <div class="mb-4">
+                                <div class="w-100 d-flex mb-2 align-items-center">
+                                    <div class="bg-pulse-grey w-25" style="width: 18px; height: 27px"></div>
+                                    <div class="bg-pulse-grey w-25 ml-2" style="height: 18px"></div>
+                                </div>
+                                <div class="w-100 d-flex mb-2 align-items-center">
+                                    <div class="bg-pulse-grey w-25" style="width: 18px; height: 27px"></div>
+                                    <div class="bg-pulse-grey w-25 ml-2" style="height: 18px"></div>
+                                </div>
+                            </div>
+                            <div class="w-25 bg-pulse-grey h6 mb-3 mt-2" style="height: 18px"></div>
+                            <div class="mb-3">
+                                <div class="w-100 d-flex mb-2 align-items-center">
+                                    <div class="bg-pulse-grey w-25" style="width: 18px; height: 27px"></div>
+                                    <div class="bg-pulse-grey w-50 ml-2" style="height: 18px"></div>
+                                </div>
+                            </div>
+                        </div>                    </div>
+                </div>            </div>
+            <div class="footer-container position-relative" data-region="footer-container">
+                
+                <div
+                    class="hidden border-top bg-white position-relative"
+                    aria-hidden="true"
+                    data-region="view-conversation"
+                    data-enter-to-send="1"
+                >
+                    <div class="hidden" data-region="content-messages-footer-container">
+                        
+                            <div
+                                class="emoji-auto-complete-container w-100 hidden"
+                                data-region="emoji-auto-complete-container"
+                                aria-live="polite"
+                                aria-hidden="true"
+                            >
+                            </div>
+                        <div class="d-flex mt-sm-1">
+                            <textarea
+                                dir="auto"
+                                data-region="send-message-txt"
+                                rows="3"
+                                data-auto-rows
+                                data-min-rows="3"
+                                data-max-rows="5"
+                                aria-label="Escribe un mensaje..."
+                                placeholder="Escribe un mensaje..."
+                                style="resize: none"
+                                maxlength="4096"
+                            ></textarea>
+                        
+                            <div class="position-relative d-flex flex-column">
+                                    <div
+                                        data-region="emoji-picker-container"
+                                        class="emoji-picker-container hidden"
+                                        aria-hidden="true"
+                                    >
+                                        
+                                        <div
+                                            data-region="emoji-picker"
+                                            class="card shadow emoji-picker"
+                                        >
+                                            <div class="card-header px-1 pt-1 pb-0 d-flex justify-content-between flex-shrink-0">
+                                                <button
+                                                    class="btn btn-outline-secondary icon-no-margin category-button rounded-0 selected"
+                                                    data-action="show-category"
+                                                    data-category="Recent"
+                                                    title="Reciente"
+                                                >
+                                                    <i class="icon fa iconic-icon iconic-clock fa-fw " aria-hidden="true"  ></i>
+                                                </button>
+                                                <button
+                                                    class="btn btn-outline-secondary icon-no-margin category-button rounded-0"
+                                                    data-action="show-category"
+                                                    data-category="Smileys & Emotion"
+                                                    title="Caritas sonrientes y emociones"
+                                                >
+                                                    <i class="icon fa iconic-icon iconic-emoji-happy fa-fw " aria-hidden="true"  ></i>
+                                                </button>
+                                                <button
+                                                    class="btn btn-outline-secondary icon-no-margin category-button rounded-0"
+                                                    data-action="show-category"
+                                                    data-category="People & Body"
+                                                    title="Personas y cuerpo"
+                                                >
+                                                    <i class="icon fa fa-male fa-fw " aria-hidden="true"  ></i>
+                                                </button>
+                                                <button
+                                                    class="btn btn-outline-secondary icon-no-margin category-button rounded-0"
+                                                    data-action="show-category"
+                                                    data-category="Animals & Nature"
+                                                    title="Animales y naturaleza"
+                                                >
+                                                    <i class="icon fa fa-leaf fa-fw " aria-hidden="true"  ></i>
+                                                </button>
+                                                <button
+                                                    class="btn btn-outline-secondary icon-no-margin category-button rounded-0"
+                                                    data-action="show-category"
+                                                    data-category="Food & Drink"
+                                                    title="Comida y bebida"
+                                                >
+                                                    <i class="icon fa fa-cutlery fa-fw " aria-hidden="true"  ></i>
+                                                </button>
+                                                <button
+                                                    class="btn btn-outline-secondary icon-no-margin category-button rounded-0"
+                                                    data-action="show-category"
+                                                    data-category="Travel & Places"
+                                                    title="Viaje y lugares"
+                                                >
+                                                    <i class="icon fa fa-plane fa-fw " aria-hidden="true"  ></i>
+                                                </button>
+                                                <button
+                                                    class="btn btn-outline-secondary icon-no-margin category-button rounded-0"
+                                                    data-action="show-category"
+                                                    data-category="Activities"
+                                                    title="Actividades"
+                                                >
+                                                    <i class="icon fa fa-futbol-o fa-fw " aria-hidden="true"  ></i>
+                                                </button>
+                                                <button
+                                                    class="btn btn-outline-secondary icon-no-margin category-button rounded-0"
+                                                    data-action="show-category"
+                                                    data-category="Objects"
+                                                    title="Objetos"
+                                                >
+                                                    <i class="icon fa fa-lightbulb-o fa-fw " aria-hidden="true"  ></i>
+                                                </button>
+                                                <button
+                                                    class="btn btn-outline-secondary icon-no-margin category-button rounded-0"
+                                                    data-action="show-category"
+                                                    data-category="Symbols"
+                                                    title="Símbolos"
+                                                >
+                                                    <i class="icon fa fa-heart fa-fw " aria-hidden="true"  ></i>
+                                                </button>
+                                                <button
+                                                    class="btn btn-outline-secondary icon-no-margin category-button rounded-0"
+                                                    data-action="show-category"
+                                                    data-category="Flags"
+                                                    title="Banderas"
+                                                >
+                                                    <i class="icon fa fa-flag fa-fw " aria-hidden="true"  ></i>
+                                                </button>
+                                            </div>
+                                            <div class="card-body p-2 d-flex flex-column overflow-hidden">
+                                                <div class="input-group mb-1 flex-shrink-0">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text pr-0 bg-white text-muted">
+                                                            <i class="icon fa iconic-icon iconic-search fa-fw " aria-hidden="true"  ></i>
+                                                        </span>
+                                                    </div>
+                                                    <input
+                                                        type="text"
+                                                        class="form-control border-left-0"
+                                                        placeholder="Buscar"
+                                                        aria-label="Buscar"
+                                                        data-region="search-input"
+                                                    >
+                                                </div>
+                                                <div class="flex-grow-1 overflow-auto emojis-container h-100" data-region="emojis-container">
+                                                    <div class="position-relative" data-region="row-container"></div>
+                                                </div>
+                                                <div class="flex-grow-1 overflow-auto search-results-container h-100 hidden" data-region="search-results-container">
+                                                    <div class="position-relative" data-region="row-container"></div>
+                                                </div>
+                                            </div>
+                                            <div
+                                                class="card-footer d-flex flex-shrink-0"
+                                                data-region="footer"
+                                            >
+                                                <div class="emoji-preview" data-region="emoji-preview"></div>
+                                                <div data-region="emoji-short-name" class="emoji-short-name text-muted text-wrap ml-2"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button
+                                        class="btn btn-link btn-icon icon-size-3 ml-1 mt-2"
+                                        aria-label="Selector de emoticono"
+                                        data-action="toggle-emoji-picker"
+                                    >
+                                        <i class="icon fa iconic-icon iconic-emoji-happy fa-fw " aria-hidden="true"  ></i>
+                                    </button>
+                                <button
+                                    class="btn btn-link btn-icon icon-size-3 ml-1 mt-auto mb-2"
+                                    aria-label="Enviar mensaje"
+                                    data-action="send-message"
+                                >
+                                    <span data-region="send-icon-container"><i class="icon fa iconic-icon iconic-send iconic-90 fa-fw " aria-hidden="true"  ></i></span>
+                                    <span class="hidden" data-region="loading-icon-container"><span class="loading-icon icon-no-margin"><i class="icon fa fa-circle-o-notch fa-spin fa-fw "  title="Cargando" role="img" aria-label="Cargando"></i></span>
+</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hidden" data-region="content-messages-footer-edit-mode-container">
+                        
+                        <div class="d-flex p-3 justify-content-end">
+                            <button
+                                class="btn btn-link btn-icon my-1 icon-size-4"
+                                data-action="delete-selected-messages"
+                                data-toggle="tooltip"
+                                data-placement="top"
+                                title="Eliminar mensajes seleccionados"
+                            >
+                                <span data-region="icon-container"><i class="icon fa iconic-icon iconic-trash fa-fw " aria-hidden="true"  ></i></span>
+                                <span class="hidden" data-region="loading-icon-container"><span class="loading-icon icon-no-margin"><i class="icon fa fa-circle-o-notch fa-spin fa-fw "  title="Cargando" role="img" aria-label="Cargando"></i></span>
+</span>
+                                <span class="sr-only">Eliminar mensajes seleccionados</span>
+                            </button>
+                        </div>                    </div>
+                    <div class="hidden bg-secondary" data-region="content-messages-footer-require-contact-container">
+                        
+                        <div class="p-3 bg-white">
+                            <p data-region="title"></p>
+                            <p class="text-muted" data-region="text"></p>
+                            <button type="button" class="btn btn-primary btn-block" data-action="request-add-contact">
+                                <span data-region="dialogue-button-text">Enviar solicitud de contacto</span>
+                                <span class="hidden" data-region="loading-icon-container"><span class="loading-icon icon-no-margin"><i class="icon fa fa-circle-o-notch fa-spin fa-fw "  title="Cargando" role="img" aria-label="Cargando"></i></span>
+</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="hidden bg-secondary" data-region="content-messages-footer-require-unblock-container">
+                        
+                        <div class="p-3 bg-white">
+                            <p class="text-muted" data-region="text">Ha bloqueado a este usuario.</p>
+                            <button type="button" class="btn btn-primary btn-block" data-action="request-unblock">
+                                <span data-region="dialogue-button-text">Desbloquear usuario</span>
+                                <span class="hidden" data-region="loading-icon-container"><span class="loading-icon icon-no-margin"><i class="icon fa fa-circle-o-notch fa-spin fa-fw "  title="Cargando" role="img" aria-label="Cargando"></i></span>
+</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="hidden bg-secondary" data-region="content-messages-footer-unable-to-message">
+                        
+                        <div class="p-3 bg-white">
+                            <p class="text-muted" data-region="text">No puedes enviar mensajes a este usuario</p>
+                        </div>
+                    </div>
+                    <div data-region="placeholder-container">
+                        <div class="d-flex">
+                            <div class="bg-pulse-grey w-100" style="height: 80px"></div>
+                            <div class="mx-2 mb-2 align-self-end bg-pulse-grey" style="height: 20px; width: 20px"></div>
+                        </div>                    </div>
+                    <div
+                        class="hidden position-absolute"
+                        data-region="confirm-dialogue-container"
+                        style="top: -1px; bottom: 0; right: 0; left: 0; background: rgba(0,0,0,0.3);"
+                    ></div>
+                </div>
+                    <div data-region="view-overview" class="text-center">
+                        <a href="https://auladecroly.com/message/index.php">
+                            Ver todo
+                        </a>
+                    </div>
+            </div>
+        </div>
+
+</div>
+</div>
+<div id="goto-top-link">
+    <a class="btn btn-light" role="button" href="#" aria-label="Ir arriba">
+        <i class="icon fa iconic-icon iconic-arrow-up fa-fw " aria-hidden="true"  ></i>
+    </a>
+</div>
+<footer id="page-footer" class="py-3 bg-dark text-light">
+    <div class="container">
+        <ul>
+        </ul>
+        <script>
+//<![CDATA[
+var require = {
+    baseUrl : 'https://auladecroly.com/lib/requirejs.php/-1/',
+    // We only support AMD modules with an explicit define() statement.
+    enforceDefine: true,
+    skipDataMain: true,
+    waitSeconds : 0,
+
+    paths: {
+        jquery: 'https://auladecroly.com/lib/javascript.php/-1/lib/jquery/jquery-3.6.1',
+        jqueryui: 'https://auladecroly.com/lib/javascript.php/-1/lib/jquery/ui-1.13.2/jquery-ui',
+        jqueryprivate: 'https://auladecroly.com/lib/javascript.php/-1/lib/requirejs/jquery-private'
+    },
+
+    // Custom jquery config map.
+    map: {
+      // '*' means all modules will get 'jqueryprivate'
+      // for their 'jquery' dependency.
+      '*': { jquery: 'jqueryprivate' },
+      // Stub module for 'process'. This is a workaround for a bug in MathJax (see MDL-60458).
+      '*': { process: 'core/first' },
+
+      // 'jquery-private' wants the real jQuery module
+      // though. If this line was not here, there would
+      // be an unresolvable cyclic dependency.
+      jqueryprivate: { jquery: 'jquery' }
+    }
+};
+
+//]]>
+</script>
+<script src="https://auladecroly.com/lib/javascript.php/-1/lib/requirejs/require.js"></script>
+<script>
+//<![CDATA[
+M.util.js_pending("core/first");
+require(['core/first'], function() {
+require(['core/prefetch'])
+;
+require(["media_videojs/loader"], function(loader) {
+    loader.setUp('es');
+});;
+M.util.js_pending('local_boostnavigation/collapsenavdrawernodes'); require(['local_boostnavigation/collapsenavdrawernodes'], function(amd) {amd.init(["localboostnavigationcustomrootusers2"], []); M.util.js_complete('local_boostnavigation/collapsenavdrawernodes');});;
+
+require(['core_course/manual_completion_toggle'], toggle => {
+    toggle.init()
+});
+;
+M.util.js_pending('core_courseformat/local/content/activity_header'); require(['core_courseformat/local/content/activity_header'], function(amd) {amd.init(); M.util.js_complete('core_courseformat/local/content/activity_header');});;
+
+require(['jquery', 'core/custom_interaction_events'], function($, CustomEvents) {
+    CustomEvents.define('#single_select69b7c53d0809d4', [CustomEvents.events.accessibleChange]);
+    $('#single_select69b7c53d0809d4').on(CustomEvents.events.accessibleChange, function() {
+        var ignore = $(this).find(':selected').attr('data-ignore');
+        if (typeof ignore === typeof undefined) {
+            $('#single_select_f69b7c53d0809d3').submit();
+        }
+    });
+});
+;
+
+    require(['core/moremenu'], function(moremenu) {
+        moremenu(document.querySelector('#moremenu-69b7c53d151a6-navbar-nav'));
+    });
+;
+
+require(['theme_proeducaboost/notification_popover_controller','jquery'], function(controller, $) {
+    var container = $('#nav-notification-popover-container');
+    var controller = new controller(container);
+    controller.registerEventListeners();
+    controller.registerListNavigationEventListeners();
+});
+;
+
+require(
+[
+    'jquery',
+    'core_message/message_popover'
+],
+function(
+    $,
+    Popover
+) {
+    var toggle = $('#message-drawer-toggle-69b7c53d1a23769b7c53d0809d7');
+    Popover.init(toggle);
+});
+;
+
+require(['jquery', 'core/popover_region_controller'], function($, controller) {
+    var container = $('#nav-mail-popover-container');
+    var controller = new controller(container);
+    controller.registerListNavigationEventListeners();
+});
+;
+
+        require(['jquery', 'core/custom_interaction_events'], function($, CustomEvents) {
+            CustomEvents.define('#jump-to-activity', [CustomEvents.events.accessibleChange]);
+            $('#jump-to-activity').on(CustomEvents.events.accessibleChange, function() {
+                if ($(this).val()) {
+                    $('#url_select_f69b7c53d0809d17').submit();
+                }
+            });
+        });
+    ;
+
+require(['jquery', 'core_message/message_drawer'], function($, MessageDrawer) {
+    var root = $('#message-drawer-69b7c53d1cfe769b7c53d0809d18');
+    MessageDrawer.init(root, '69b7c53d1cfe769b7c53d0809d18', false);
+});
+;
+
+M.util.js_pending('theme_boost/loader');
+require(['theme_boost/loader'], function() {
+    M.util.js_complete('theme_boost/loader');
+});
+
+M.util.js_pending('theme_boost/drawer');
+require(['theme_boost/drawer'], function(drawer) {
+    $('.mycoursesnode, .categorynode, .coursenode').on('show.bs.tooltip', function(){
+        $($(this).data('bs.tooltip').tip).addClass('mycoursestooltip');
+    });
+
+    drawer.init();
+    M.util.js_complete('theme_boost/drawer');
+    $('#hide-blocks-column').click(function() {
+        $('body').addClass('blocks-column-hidden');
+        M.util.set_user_preference('hide-blocks-column', 'true');
+    });
+    $('#show-blocks-column').click(function() {
+        $('body').removeClass('blocks-column-hidden');
+        M.util.set_user_preference('hide-blocks-column', 'false');
+    });
+
+    $('body.pagelayout-course:not(.editing) .topics>.section>.content .sectionname').each(function() {
+        $(this).siblings('.section.img-text').addClass('collapse show')
+        $(this).click(function(e) {
+            e.preventDefault();
+            $(this).toggleClass('closed');
+            $(this).siblings('.section.img-text').collapse('toggle');
+        });
+    });
+
+    if(document.getElementsByClassName('editing').length == 0) {
+        var topicdiv = document.getElementsByClassName('sitetopic');
+        for(var i = 0 ; i < topicdiv.length ; i++) {
+            for(var j = 0 ; j < topicdiv[i].children.length ; j++){
+                if(topicdiv[i].children[j].className.includes('section')) {
+                    var section = topicdiv[i].children[j];
+                    var label = null;
+                    var container = null;
+                    var rowTableContainer = null;
+                    var elementsAddedInRow = 0;
+                    var lastChild = null;
+                    var collapsableContainer = null;
+                    if(elementsAddedInRow == 3){
+                        elementsAddedInRow = 0;
+                        rowTableContainer = document.createElement('div');
+                        setContainerFrontPageClass(null, null, rowTableContainer);
+                        section.insertBefore(rowTableContainer, container);
+                        container.appendChild(rowTableContainer);
+                    }
+                    for(var k = 0 ; k < section.children.length ; k++){
+                        if(section.children[k].className.includes('activity label')){
+                            if(label != null) {
+                                collapsableContainer = null;
+                                container = null;
+                                lastChild = null;
+                            }
+                            label = section.children[k];
+
+                        } else if(section.children[k].className.includes('activity') &&
+                            !section.children[k].className.includes('label') && label != null){
+                            lastChild = section.children[k];
+                            lastChild.classList.add('tableCell');
+                            if(container == null){
+                                collapsableContainer = document.createElement('div');
+                                section.insertBefore(collapsableContainer, lastChild);
+                                container = document.createElement('div');
+                                section.insertBefore(container, lastChild);
+
+                                rowTableContainer = document.createElement('div');
+                                setContainerFrontPageClass(collapsableContainer, container, rowTableContainer);
+                                section.insertBefore(rowTableContainer, container);
+                                container.appendChild(rowTableContainer);
+                                collapsableContainer.appendChild(container);
+                                $('#' + label.id).next().on('hidden.bs.collapse', function () {
+                                    $(this).prev().css('border-bottom-style', 'solid');
+                                    $(this).prev().css('border-bottom-color', 'black');
+                                });
+                                $('.collapse').collapse();
+                                $('#' + label.id).next().collapse({
+                                    toggle : false
+                                });
+                                $('#' + label.id).click(function(e) {
+                                    e.preventDefault();
+                                    if(!$(this).next().hasClass('show')){
+                                        $(this).css('border-bottom-style', 'unset');
+                                    }
+                                    $(this).next().collapse('toggle');
+                                    $(this).toggleClass('closed');
+                                });
+                                k++;
+                            }
+                            rowTableContainer.appendChild(lastChild);
+                            elementsAddedInRow++;
+                            k--;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    var filtersGroups = document.getElementsByClassName('d-flex flex-wrap align-items-center');
+    if (filtersGroups) {
+        for (var i = 0; i < filtersGroups.length; i++) {
+            if (filtersGroups[i].children) {
+                for (var j = 0; j < filtersGroups[i].children.length; j++) {
+                    if (filtersGroups[i].children[j].children &&
+                        filtersGroups[i].children[j].children[1] &&
+                        filtersGroups[i].children[j].children[1].dataset &&
+                        filtersGroups[i].children[j].children[1].dataset.fieldtype &&
+                        filtersGroups[i].children[j].children[1].dataset.fieldtype === 'select' &&
+                        filtersGroups[i].children[j].children[1].children &&
+                        filtersGroups[i].children[j].children[1].children[0] &&
+                        filtersGroups[i].children[j + 1] &&
+                        filtersGroups[i].children[j + 1].children &&
+                        filtersGroups[i].children[j + 1].children[1] &&
+                        filtersGroups[i].children[j + 1].children[1].dataset &&
+                        filtersGroups[i].children[j + 1].children[1].dataset.fieldtype &&
+                        filtersGroups[i].children[j + 1].children[1].dataset.fieldtype === 'text' &&
+                        filtersGroups[i].children[j + 1].children[1].children &&
+                        filtersGroups[i].children[j + 1].children[1].children[0]) {
+                        filtersGroups[i].children[j + 1].children[1].children[0].style.height = filtersGroups[i].children[j].children[1].children[0].clientHeight + 'px';
+                    }
+                }
+            }
+        }
+    }
+
+    function setContainerFrontPageClass(collapsableContainer, container, rowContainer) {
+        if(collapsableContainer != null){
+            collapsableContainer.classList.add('collapse');
+            collapsableContainer.classList.add('collapsablediv');
+        }
+
+        if(container != null){
+            container.classList.add('tabledisplay');
+        }
+
+        if(rowContainer != null) {
+            rowContainer.classList.add('tableRow');
+        }
+    }
+
+    $('.block_course_categories .list-group-item').each(function() {
+        if ($(this).has('.list-group-item.has-role').length > 0) {
+            $(this).addClass('has-child-role');
+        }
+    });
+
+    $('#block-course-cat-dropdown .dropdown-item').on('click', function(c) {
+        $('#block-course-cat-dropdown-menu .list-group-item').removeClass('hidden');
+
+        const blockCourseDropdownValue = $(this).data('value');
+        switch (blockCourseDropdownValue) {
+            case "all":
+                c.preventDefault();
+                $('#block-course-cat-dropdown-menu .deleted-in-view').addClass('hidden');
+                break;
+
+            case "actived":
+                c.preventDefault();
+                $('#block-course-cat-dropdown-menu .list-group-item').each(function() {
+                    if ($(this).find('.contain-courses').length == 0) {
+                        $(this).addClass('hidden');
+                    }
+                    if ($(this).hasClass('contain-courses')) {
+                        $(this).removeClass('hidden');
+                    }
+                    /*if ($(this).find('.no-courses').length == 0) {
+                        $(this).addClass('hidden');
+                    }
+                    if ($(this).hasClass('contain-courses')) {
+                        $(this).removeClass('hidden');
+                    }
+                    if ($(this).parents('.no-courses').length > 0) {
+                        $(this).removeClass('hidden');
+                    }*/
+                });
+                break;
+
+            case "hidden":
+                c.preventDefault();
+                $('#block-course-cat-dropdown-menu .list-group-item').each(function() {
+                    if ($(this).find('.deleted-in-view').length == 0) {
+                        $(this).addClass('hidden');
+                    }
+                    if ($(this).hasClass('deleted-in-view')) {
+                        $(this).removeClass('hidden');
+                    }
+                    if ($(this).parents('.deleted-in-view').length > 0) {
+                        $(this).removeClass('hidden');
+                    }
+                });
+                break;
+        }
+    });
+    $('#block-course-cat-dropdown .dropdown-item[data-value="all"]').click();
+});
+;
+M.util.js_pending('core/notification'); require(['core/notification'], function(amd) {amd.init(55799, []); M.util.js_complete('core/notification');});;
+M.util.js_pending('core/log'); require(['core/log'], function(amd) {amd.setConfig({"level":"warn"}); M.util.js_complete('core/log');});;
+M.util.js_pending('core/page_global'); require(['core/page_global'], function(amd) {amd.init(); M.util.js_complete('core/page_global');});;
+M.util.js_pending('core/utility'); require(['core/utility'], function(amd) {M.util.js_complete('core/utility');});
+    M.util.js_complete("core/first");
+});
+//]]>
+</script>
+<script>
+//<![CDATA[
+M.yui.add_module({"mod_assign":{"name":"mod_assign","fullpath":"https:\/\/auladecroly.com\/lib\/javascript.php\/-1\/mod\/assign\/module.js","requires":[]},"core_comment":{"name":"core_comment","fullpath":"https:\/\/auladecroly.com\/lib\/javascript.php\/-1\/comment\/comment.js","requires":["base","io-base","node","json","yui2-animation","overlay","escape"]}});
+
+//]]>
+</script>
+<script>
+//<![CDATA[
+M.str = {"moodle":{"lastmodified":"\u00daltima modificaci\u00f3n","name":"Nombre","error":"Error","info":"Informaci\u00f3n","yes":"S\u00ed","no":"No","cancel":"Cancelar","addcomment":"Agregar un comentario...","comments":"Comentarios","commentscount":"Comentarios ({$a})","commentsrequirelogin":"Necesita identificarse para ver los comentarios.","deletecommentbyon":"Borrar el comentario publicado por  {$a->user} el {$a->time}","confirm":"Confirmar","areyousure":"\u00bfEst\u00e1 seguro?","closebuttontitle":"Cerrar","unknownerror":"Error desconocido","file":"Archivo","url":"URL","collapseall":"Colapsar todo","expandall":"Expandir todo"},"repository":{"type":"Tipo","size":"Tama\u00f1o","invalidjson":"Cadena JSON no v\u00e1lida","nofilesattached":"No se han adjuntado archivos","filepicker":"Selector de archivos","logout":"Salir","nofilesavailable":"No hay archivos disponibles","norepositoriesavailable":"Lo sentimos, ninguno de sus repositorios actuales puede devolver archivos en el formato solicitado.","fileexistsdialogheader":"El archivo existe","fileexistsdialog_editor":"Un archivo con ese nombre ha sido anexado al texto que Usted est\u00e1 editando","fileexistsdialog_filemanager":"Ya ha sido anexado un archivo con ese nombre","renameto":"Cambiar el nombre a \"{$a}\"","referencesexist":"Existen {$a} enlaces a este archivo","select":"Seleccionar"},"admin":{"confirmdeletecomments":"Est\u00e1 a punto de eliminar comentarios, \u00bfest\u00e1 seguro?","confirmation":"Confirmaci\u00f3n"},"debug":{"debuginfo":"Informaci\u00f3n de depuraci\u00f3n","line":"L\u00ednea","stacktrace":"Trazado de la pila (stack)"},"langconfig":{"labelsep":":"}};
+//]]>
+</script>
+<script>
+//<![CDATA[
+(function() {Y.use("moodle-filter_mathjaxloader-loader",function() {M.filter_mathjaxloader.configure({"mathjaxconfig":"\nMathJax.Hub.Config({\n    config: [\"Accessible.js\", \"Safe.js\"],\n    errorSettings: { message: [\"!\"] },\n    skipStartupTypeset: true,\n    messageStyle: \"none\"\n});\n","lang":"es"});
+});
+ M.util.js_pending('random69b7c53d0809d2'); Y.use('mod_assign', function(Y) { M.mod_assign.init_tree(Y, true, "assign_files_tree69b7c53d0809d1");  M.util.js_complete('random69b7c53d0809d2'); });
+M.util.help_popups.setup(Y);
+ M.util.js_pending('random69b7c53d0809d20'); Y.use('mod_assign', function(Y) { M.mod_assign.init_tree(Y, true, "assign_files_tree69b7c53d0809d19");  M.util.js_complete('random69b7c53d0809d20'); });
+ M.util.js_pending('random69b7c53d0809d21'); Y.on('domready', function() {  M.util.js_pending('random69b7c53d0809d21'); Y.use('core_comment', function(Y) { M.core_comment.init(Y, {"client_id":"69b7c53d232bc","commentarea":"submission_comments","itemid":"214997","page":0,"courseid":"219","contextid":55799,"component":"assignsubmission_comments","notoggle":false,"autostart":false});  M.util.js_complete('random69b7c53d0809d21'); });  M.util.js_complete('random69b7c53d0809d21'); });
+ M.util.js_pending('random69b7c53d0809d22'); Y.on('domready', function() { M.util.js_complete("init");  M.util.js_complete('random69b7c53d0809d22'); });
+})();
+//]]>
+</script>
+
+    </div>
+</footer>
+<script>
+    var title = document.title.split(':')[0];
+    var lastNavBarElementPosition = 0;
+    var courseNameNavBarPosition = 0;
+    var changesTitle = false;
+    if(window.location.href.includes('/mod/lti')) {
+        lastNavBarElementPosition = 3;
+        courseNameNavBarPosition = 2;
+        changesTitle = true;
+    } else if(window.location.href.includes('user')) {
+        lastNavBarElementPosition = 3;
+        courseNameNavBarPosition = 2;
+        changesTitle = true;
+    }
+    if(document.getElementById('page-navbar') && document.getElementById('page-navbar').children[0]
+        && document.getElementById('page-navbar').children[0].children[0] && document.getElementById('page-navbar').children[0].children[0].children[lastNavBarElementPosition]
+        && document.getElementById('page-navbar').children[0].children[0].children[lastNavBarElementPosition].children[0] && changesTitle) {
+            var courseName = document.getElementById('page-navbar').children[0].children[0].children[courseNameNavBarPosition].children[0].innerText;
+            if(title && courseName && (title != courseName)){
+                document.title = courseName.concat(':').concat(document.title.split(':')[1]);
+            }
+    }
+</script>
+</body>
+</html>
