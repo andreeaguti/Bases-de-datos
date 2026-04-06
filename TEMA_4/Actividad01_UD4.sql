@@ -1480,6 +1480,7 @@ BEGIN
 	END IF;
 END $$
 
+INSERT INTO `employees` VALUES (10001,'2000-09-02','Gutiérrez','Andrea','M','2022-06-26');
 
 
 
@@ -1496,22 +1497,76 @@ END $$
 
 INSERT INTO `dept_emp` VALUES (10200,'d005','1986-06-26','1985-05-26');
 
-/*Ejercicio 1d*/
+/*Ejercicio 1d
 DELIMITER $$  
 CREATE TRIGGER ejercicio1d
 BEFORE INSERT ON dept_manager
-
 FOR EACH ROW
 BEGIN
-DECLARE fecha_con DATE
-SELECT hire_date INTO fecha_com
+DECLARE fecha_contratacion DATE;
+-- Busco la fecha en la que entró el empleado a la empresa
+SELECT hire_date INTO fecha_contratacion
 FROM employees
 WHERE emp_no = NEW.emp_no;
-	IF TIMESTAMPDIFF (YEAR, NEW.hire_date, NEW.to_date) < 10
+	IF TIMESTAMPDIFF (YEAR, fecha_contratacion, NEW.from_date) < 10
 		THEN SIGNAL SQLSTATE '50001' SET MESSAGE_TEXT = 'No puedes ser manager, ¡No llevas más de 10 años!'; 
 	END IF;
 END $$
+DELIMITER ;
 
-INSERT INTO `dept_manager` VALUES (10001,'d007','2018-10-01','2019-10-10'),
+INSERT INTO `dept_manager` VALUES (10019, 'd007', '2000-01-01', '2026-01-01');*/
 
 
+/*Ejercicio 2A
+CREATE TABLE IF NOT EXISTS ricachones (
+    emp_no INT,
+    salary INT,
+    from_date DATE,
+    PRIMARY KEY (emp_no, from_date),
+    FOREIGN KEY (emp_no) REFERENCES employees(emp_no) ON DELETE CASCADE
+);
+
+DROP TRIGGER IF EXISTS tg_ricachones;
+DELIMITER $$
+CREATE TRIGGER tg_ricachones
+AFTER INSERT ON salaries
+FOR EACH ROW
+BEGIN
+    -- Compruebo si el nuevo salario supera los 100.000
+    IF NEW.salary > 100000 THEN
+        INSERT INTO ricachones (emp_no, salary, from_date)
+        VALUES (NEW.emp_no, NEW.salary, NEW.from_date);
+    END IF;
+END $$
+DELIMITER ;
+
+INSERT INTO salaries (emp_no, salary, from_date, to_date) 
+VALUES (10001, 105000, CURDATE(), '9999-01-01');
+
+SELECT * FROM ricachones;*/
+
+/*Ejercicio 2B*/
+
+USE employees;
+
+-- 1. CREAMOS LA TABLA (Esto es lo que te falta)
+CREATE TABLE IF NOT EXISTS reyes_mambo (
+    emp_no INT NOT NULL,
+    dept_no CHAR(4) NOT NULL,
+    from_date DATE NOT NULL,
+    to_date_final DATE NOT NULL,
+    PRIMARY KEY (emp_no, dept_no, from_date),
+    FOREIGN KEY (emp_no) REFERENCES employees(emp_no) ON DELETE CASCADE
+);
+
+-- 2. DESACTIVAMOS EL MODO SEGURO (Por si acaso)
+SET SQL_SAFE_UPDATES = 0;
+
+-- 3. AHORA SÍ, ACTUALIZAMOS AL JEFE 10003
+-- Al existir la tabla, el trigger ya no dará error
+UPDATE dept_manager 
+SET to_date = CURDATE() 
+WHERE emp_no = 10003 AND dept_no = 'd004';
+
+-- 4. COMPROBAMOS EL RESULTADO
+SELECT * FROM reyes_mambo;
