@@ -1456,7 +1456,7 @@ INSERT INTO `salaries` VALUES (10001,60117,'1986-06-26','1987-06-26'),
 
 
 
-/*Ejercicio 1a*/
+/*Ejercicio 1a
 DELIMITER $$  
 CREATE TRIGGER ejercicio1a  
 BEFORE INSERT ON employees  
@@ -1469,7 +1469,7 @@ END $$
 
 INSERT INTO `employees` VALUES (10001,'2020-09-02','Georgi','Andrea','M','2022-06-26');
 
-/*Ejercicio 1b*/
+/*Ejercicio 1b
 DELIMITER $$  
 CREATE TRIGGER ejercicio1b  
 BEFORE INSERT ON employees
@@ -1484,7 +1484,7 @@ INSERT INTO `employees` VALUES (10001,'2000-09-02','Gutiérrez','Andrea','M','20
 
 
 
-/*Ejercicio 1c*/
+/*Ejercicio 1c
 DELIMITER $$  
 CREATE TRIGGER ejercicio1c
 BEFORE INSERT ON dept_emp
@@ -1514,7 +1514,7 @@ WHERE emp_no = NEW.emp_no;
 END $$
 DELIMITER ;
 
-INSERT INTO `dept_manager` VALUES (10019, 'd007', '2000-01-01', '2026-01-01');*/
+INSERT INTO `dept_manager` VALUES (10019, 'd007', '2000-01-01', '2026-01-01');
 
 
 /*Ejercicio 2A
@@ -1547,26 +1547,71 @@ SELECT * FROM ricachones;*/
 
 /*Ejercicio 2B*/
 
-USE employees;
-
--- 1. CREAMOS LA TABLA (Esto es lo que te falta)
+-- 1. CREO LA TABLA 
 CREATE TABLE IF NOT EXISTS reyes_mambo (
-    emp_no INT NOT NULL,
-    dept_no CHAR(4) NOT NULL,
-    from_date DATE NOT NULL,
-    to_date_final DATE NOT NULL,
+    emp_no INT,
+    dept_no CHAR(4),
+    from_date DATE,
+    to_date_final DATE,
     PRIMARY KEY (emp_no, dept_no, from_date),
     FOREIGN KEY (emp_no) REFERENCES employees(emp_no) ON DELETE CASCADE
 );
 
--- 2. DESACTIVAMOS EL MODO SEGURO (Por si acaso)
-SET SQL_SAFE_UPDATES = 0;
+DELIMITER $$
 
--- 3. AHORA SÍ, ACTUALIZAMOS AL JEFE 10003
--- Al existir la tabla, el trigger ya no dará error
+CREATE TRIGGER tg_reyes_mambo
+AFTER UPDATE ON dept_manager
+FOR EACH ROW
+BEGIN
+    -- Solo nos interesa si el jefe sigue (9999-01-01) 
+    IF OLD.to_date = '9999-01-01' AND NEW.to_date <> '9999-01-01' THEN
+        INSERT INTO reyes_mambo (emp_no, dept_no, from_date, to_date_final)
+        VALUES (OLD.emp_no, OLD.dept_no, OLD.from_date, NEW.to_date);
+    END IF;
+END $$
+
+DELIMITER ;
+
+-- 3. AHORA SÍ, ACTUALIZO AL JEFE 10003
 UPDATE dept_manager 
 SET to_date = CURDATE() 
 WHERE emp_no = 10003 AND dept_no = 'd004';
 
 -- 4. COMPROBAMOS EL RESULTADO
 SELECT * FROM reyes_mambo;
+
+
+/*Ejercicio 2C*/
+DROP TABLE IF EXISTS log_nombres_dept;
+DROP TRIGGER IF EXISTS control_nombres_dept;
+
+CREATE TABLE log_nombres_dept (
+    dept_no CHAR(4),
+    nombre_propuesto VARCHAR(40),
+    fecha_intento DATETIME,
+    usuario_responsable VARCHAR(100),
+    PRIMARY KEY (dept_no, fecha_intento),
+    FOREIGN KEY (dept_no) REFERENCES departments(dept_no) ON DELETE CASCADE
+);
+
+DELIMITER $$
+
+CREATE TRIGGER control_nombres_dept
+BEFORE UPDATE ON departments
+FOR EACH ROW
+BEGIN
+    IF OLD.dept_name <> NEW.dept_name THEN
+        INSERT INTO log_nombres_dept (dept_no, nombre_propuesto, fecha_intento, usuario_responsable)
+        VALUES (OLD.dept_no, NEW.dept_name, NOW(), USER());
+    END IF;
+END $$
+
+DELIMITER ;
+
+UPDATE departments 
+SET dept_name = 'Marketing y Ventas' 
+WHERE dept_no = 'd001';
+
+SELECT * FROM log_nombres_dept;
+
+
