@@ -74,3 +74,44 @@ CALL SELECT_PRODUCT(103);
 código del producto y las unidades vendidas en la operación de venta, para después descontar dichas unidades del total 
 de disponibles. Además, deberá registrar dicha compra en una tabla "sell_history", incluyendo una entrada con el id del 
 vendedor, id del producto, unidades vendidas, ingresos por la venta y fecha de la venta.*/
+DROP PROCEDURE IF EXISTS SELL_PRODUCT;
+
+DELIMITER $$
+CREATE PROCEDURE SELL_PRODUCT(
+	IN p_id_vendedor INT,
+    IN p_id_producto INT,
+    IN p_unidades_vendidas INT
+)
+BEGIN
+-- declaro variables para calcular el ingreso total
+    DECLARE v_precio_unidad DECIMAL(10,2);
+    DECLARE v_ingresos_totales DECIMAL(10,2);
+    
+-- Obtengo el precio de la tabla productos
+    SELECT precio INTO v_precio_unidad 
+    FROM productos 
+    WHERE id_producto = p_id_producto;
+    
+-- Calculo los ingresos totales de esta venta
+    SET v_ingresos_totales = v_precio_unidad * p_unidades_vendidas;
+    
+-- Actualizo las existencias en la tabla productos
+	UPDATE productos 
+    SET existencias = existencias - p_unidades_vendidas
+    WHERE id_producto = p_id_producto;
+    
+-- Registro la venta en el historial
+    INSERT INTO historial_ventas (id_vendedor, id_producto, unidades_vendidas, ingresos, fecha_venta)
+    VALUES (p_id_vendedor, p_id_producto, p_unidades_vendidas, v_ingresos_totales, NOW());    
+
+END$$
+DELIMITER ;
+
+-- Compruebo que haya funcionado
+USE inventario;
+
+CALL SELL_PRODUCT(1, 101, 2);
+
+SELECT * FROM productos WHERE id_producto = 101; -- Compruebo que el stock ha bajado
+
+SELECT * FROM historial_ventas; -- Compruebo que se ha guardado la venta
