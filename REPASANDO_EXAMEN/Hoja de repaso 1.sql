@@ -1484,10 +1484,106 @@ BEGIN
 END $$
 DELIMITER ;
 
+/*SCRIPT2: Crea un código que traslade un empleado de un departamento a otro, actualizando la 
+tabla dept_emp. El código debe asegurarse de cerrar correctamente el registro del 
+departamento anterior y abrir un nuevo registro para el nuevo departamento. PROCEDIMIENTO*/
+DROP PROCEDURE IF EXISTS traslado_empleado;
+DELIMITER $$
+CREATE PROCEDURE traslado_empleado (
+IN p_emp_no INT,
+IN p_nuevo_departamento CHAR(4),
+OUT p_mensaje VARCHAR(100))
+BEGIN
+	DECLARE v_departamento_actual VARCHAR(50) DEFAULT '';
+	
+-- 1. Buscamos el departamento actual del empleado (donde to_date es '9999-01-01')
+    SELECT dept_no INTO v_departamento_actual
+    FROM dept_emp
+    WHERE emp_no = p_emp_no AND to_date = '9999-01-01'
+    LIMIT 1;
+    
+-- 2. VALIDACIÓN: Si ya tiene ese puesto, no hacemos nada
+    IF v_departamento_actual = p_nuevo_departamento THEN
+        SET p_mensaje = 'ERROR: El empleado ya pertenece ese departamento actualmente.';
+    ELSE
+-- 3. Cerramos el puesto actual poniéndole la fecha de hoy en 'to_date'
+        UPDATE dept_emp
+        SET to_date = CURDATE()
+        WHERE emp_no = p_emp_no AND to_date = '9999-01-01';
+        
+-- 4. Insertamos el nuevo puesto con fecha de inicio hoy y fin en el futuro ('9999-01-01')
+        INSERT INTO dept_emp (emp_no, dept_no, from_date, to_date)
+        VALUES (p_emp_no, p_nuevo_departamento, CURDATE(), '9999-01-01');
+        
+-- 6. MODIFICAMOS EL OUT: Mensaje de éxito
+        SET p_mensaje = CONCAT('ÉXITO: Cambio a departamento: ', p_nuevo_departamento);
+    END IF;
+END $$
+DELIMITER ;        
+-- esta en Production lo quiero cambiar a Development = d005
+-- Cambiamos de departamento al empleado 10004 a 'Development' (En tus datos originales es 'Production')
+CALL traslado_empleado(10004, 'd005', @resultado_texto);
+
+SELECT @resultado_texto;    
+-- 2. LA COMPROBACIÓN REAL: Ver cómo ha quedado el histórico de este empleado
+SELECT emp_no, dept_no, from_date, to_date 
+FROM dept_emp 
+WHERE emp_no = 10004;
+
+/*SCRIPT 3: Escribe un código que devuelva una lista de todos los empleados que pertenecen a un 
+departamento específico, basado en el dept_no. */
+DROP PROCEDURE IF EXISTS listar_empleados_departamento;
+DELIMITER $$
+CREATE PROCEDURE listar_empleados_departamento(
+    IN p_dept_no CHAR(4)
+)
+BEGIN
+    SELECT e.first_name, e.last_name, de.dept_no
+    FROM dept_emp de
+    INNER JOIN employees e ON de.emp_no = e.emp_no
+    WHERE de.dept_no = p_dept_no 
+      AND de.to_date = '9999-01-01'; -- Solo empleados actuales
+END $$
+DELIMITER ;
+
+-- Queremos saber cuántas personas hay en el departamento 'd005' (Development)
+CALL listar_empleados_departamento('d005');
 
 
+/*SCRIPT 4: Crea un código que determine si un empleado, dado su emp_no, ha sido alguna vez 
+gerente (revisando la tabla dept_manager) y retorne un valor booleano. FUNCIÓN*/
+DELIMITER $$ 
+CREATE FUNCTION empleado_gerente(
+	p_emp_no INT
+)
+RETURNS BOOLEAN
+DETERMINISTIC
+BEGIN
+	DECLARE v_conteo INT DEFAULT 0;
+	DECLARE v_es_gerente BOOLEAN;
+    
+ SELECT COUNT(*) INTO v_conteo
+ FROM dept_manager
+ WHERE emp_no = p_emp_no;
+ 
+	IF v_conteo > 0 THEN
+		SET v_es_gerente = 1;
+	ELSE
+		SET v_es_gerente = 0;
+END IF;
+RETURN v_es_gerente;
+END $$
+DELIMITER ;
+ 
+-- Probamos tu función con los primeros 10 empleados de la empresa
+SELECT emp_no, first_name, last_name, empleado_gerente(emp_no) 
+FROM employees
+LIMIT 10;
 
-
+    
+/*SCRIPT 5: Desarrolla un código que cada vez que se sube el sueldo a un empleado, se registre en 
+una tabla llamada “infortunios” el ID del empleado, la fecha de la subida, el nuevo salario 
+y el emp_no del manager. No olvides crear la tabla “infortunios”. TRIGGER*/
 
 
 
