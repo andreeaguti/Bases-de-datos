@@ -1454,137 +1454,195 @@ INSERT INTO `salaries` VALUES (10001,60117,'1986-06-26','1987-06-26'),
 (10100,74365,'2000-09-17','2001-09-17'),
 (10100,74957,'2001-09-17','9999-01-01');
 
-/*HOJA DE REPASO 1*/
+/*HOJA DE REPASO 3*/
 
-/*SCRIPT 1:Propón un código que se ejecute antes de insertar un nuevo registro en dept_manager para asegurar que no 
-haya más de un gerente activo por departamento en cualquier momento dado, mostrando un mensaje de error si se produce 
-esta situación. */
+/*SCRIPT 1: Crea un código que busque el primer salario de un empleado dado su emp_no y retorne un mensaje de 
+error si dicha cuantía es inferior a $100.000. En caso contrario, debe devolver el primer salario del empleado. FUNCION*/
 DELIMITER $$
-CREATE TRIGGER nuevo_registro
-BEFORE INSERT
-ON dept_manager
-FOR EACH ROW
-BEGIN
-	-- PASO 1: Creamos una variable local para guardar el resultado de la investigación
-    DECLARE v_gerentes_activos INT DEFAULT 0;
-
-    -- PASO 2: Vamos al archivo (dept_manager) a contar si ya hay un jefe hoy ('9999-01-01')
-    -- en el departamento que se intenta insertar (NEW.dept_no)
-    SELECT COUNT(*) INTO v_gerentes_activos
-    FROM dept_manager
-    WHERE dept_no = NEW.dept_no 
-      AND to_date = '9999-01-01';
-
-    -- PASO 3: Tomamos la decisión. Si la cuenta es mayor que 0, ¡frenamos todo!
-    IF v_gerentes_activos > 0 THEN
-        SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'ERROR: Este departamento ya tiene un gerente activo actualmente.';
-    END IF;
-
-END $$
-DELIMITER ;
-
-/*SCRIPT2: Crea un código que traslade un empleado de un departamento a otro, actualizando la 
-tabla dept_emp. El código debe asegurarse de cerrar correctamente el registro del 
-departamento anterior y abrir un nuevo registro para el nuevo departamento. PROCEDIMIENTO*/
-DROP PROCEDURE IF EXISTS traslado_empleado;
-DELIMITER $$
-CREATE PROCEDURE traslado_empleado (
-IN p_emp_no INT,
-IN p_nuevo_departamento CHAR(4),
-OUT p_mensaje VARCHAR(100))
-BEGIN
-	DECLARE v_departamento_actual VARCHAR(50) DEFAULT '';
-	
--- 1. Buscamos el departamento actual del empleado (donde to_date es '9999-01-01')
-    SELECT dept_no INTO v_departamento_actual
-    FROM dept_emp
-    WHERE emp_no = p_emp_no AND to_date = '9999-01-01'
-    LIMIT 1;
-    
--- 2. VALIDACIÓN: Si ya tiene ese puesto, no hacemos nada
-    IF v_departamento_actual = p_nuevo_departamento THEN
-        SET p_mensaje = 'ERROR: El empleado ya pertenece ese departamento actualmente.';
-    ELSE
--- 3. Cerramos el puesto actual poniéndole la fecha de hoy en 'to_date'
-        UPDATE dept_emp
-        SET to_date = CURDATE()
-        WHERE emp_no = p_emp_no AND to_date = '9999-01-01';
-        
--- 4. Insertamos el nuevo puesto con fecha de inicio hoy y fin en el futuro ('9999-01-01')
-        INSERT INTO dept_emp (emp_no, dept_no, from_date, to_date)
-        VALUES (p_emp_no, p_nuevo_departamento, CURDATE(), '9999-01-01');
-        
--- 6. MODIFICAMOS EL OUT: Mensaje de éxito
-        SET p_mensaje = CONCAT('ÉXITO: Cambio a departamento: ', p_nuevo_departamento);
-    END IF;
-END $$
-DELIMITER ;        
--- esta en Production lo quiero cambiar a Development = d005
--- Cambiamos de departamento al empleado 10004 a 'Development' (En tus datos originales es 'Production')
-CALL traslado_empleado(10004, 'd005', @resultado_texto);
-
-SELECT @resultado_texto;    
--- 2. LA COMPROBACIÓN REAL: Ver cómo ha quedado el histórico de este empleado
-SELECT emp_no, dept_no, from_date, to_date 
-FROM dept_emp 
-WHERE emp_no = 10004;
-
-/*SCRIPT 3: Escribe un código que devuelva una lista de todos los empleados que pertenecen a un 
-departamento específico, basado en el dept_no. */
-DROP PROCEDURE IF EXISTS listar_empleados_departamento;
-DELIMITER $$
-CREATE PROCEDURE listar_empleados_departamento(
-    IN p_dept_no CHAR(4)
+CREATE FUNCTION primer_salario (
+    p_emp_no INT -- ¡El dato que nos dan es el número de empleado!
 )
-BEGIN
-    SELECT e.first_name, e.last_name, de.dept_no
-    FROM dept_emp de
-    INNER JOIN employees e ON de.emp_no = e.emp_no
-    WHERE de.dept_no = p_dept_no 
-      AND de.to_date = '9999-01-01'; -- Solo empleados actuales
-END $$
-DELIMITER ;
-
--- Queremos saber cuántas personas hay en el departamento 'd005' (Development)
-CALL listar_empleados_departamento('d005');
-
-
-/*SCRIPT 4: Crea un código que determine si un empleado, dado su emp_no, ha sido alguna vez 
-gerente (revisando la tabla dept_manager) y retorne un valor booleano. FUNCIÓN*/
-DELIMITER $$ 
-CREATE FUNCTION empleado_gerente(
-	p_emp_no INT
-)
-RETURNS BOOLEAN
+RETURNS VARCHAR (100) -- ¿Qué va a escupir la función? ¿Un número o un texto?
 DETERMINISTIC
 BEGIN
-	DECLARE v_conteo INT DEFAULT 0;
-	DECLARE v_es_gerente BOOLEAN;
+    DECLARE v_salario_num INT;        -- Para guardar el número que saca el SELECT
+    DECLARE v_resultado VARCHAR(100);  -- Para guardar el texto final del RETURN
     
- SELECT COUNT(*) INTO v_conteo
- FROM dept_manager
- WHERE emp_no = p_emp_no;
- 
-	IF v_conteo > 0 THEN
-		SET v_es_gerente = 1;
-	ELSE
-		SET v_es_gerente = 0;
-END IF;
-RETURN v_es_gerente;
+    SELECT salary INTO v_salario_num
+    FROM salaries
+    WHERE emp_no = p_emp_no
+    ORDER BY from_date ASC
+    LIMIT 1;
+    
+    IF v_salario_num < 100000 THEN
+		SET v_resultado = 'ERROR';
+    ELSE
+        -- ¿Qué guardamos en v_resultado si está todo bien? (pista: el salario)
+        SET v_resultado = CONCAT('El primer salario es de: ', v_salario_num);
+    END IF;
+RETURN v_resultado;
 END $$
 DELIMITER ;
- 
--- Probamos tu función con los primeros 10 empleados de la empresa
-SELECT emp_no, first_name, last_name, empleado_gerente(emp_no) 
-FROM employees
-LIMIT 10;
 
+-- Prueba con un empleado (busca uno en tu tabla para ver qué te devuelve)
+SELECT primer_salario(10066);
+
+
+/*SCRIPT 2: Desarrolla un código que, cuando un empleado reciba un nuevo salario, verifique si la cuantía es más de 
+un 4% superior a su anterior salario. Si es así, muestra un mensaje de error deteniendo el proceso. TRIGGER*/
+DROP TRIGGER IF EXISTS controlar_subida_salario;
+
+DELIMITER $$
+CREATE TRIGGER controlar_subida_salario
+BEFORE INSERT ON salaries
+FOR EACH ROW
+BEGIN
+    DECLARE v_sueldo_anterior INT;
+    DECLARE v_limite_permitido DOUBLE;
     
-/*SCRIPT 5: Desarrolla un código que cada vez que se sube el sueldo a un empleado, se registre en 
-una tabla llamada “infortunios” el ID del empleado, la fecha de la subida, el nuevo salario 
-y el emp_no del manager. No olvides crear la tabla “infortunios”. TRIGGER*/
+    -- 1. Buscamos el último salario activo del empleado antes de este cambio
+    SELECT salary INTO v_sueldo_anterior
+    FROM salaries
+    WHERE emp_no = NEW.emp_no 
+      AND to_date = '9999-01-01'; -- El sueldo que tenía activo hasta hoy
+      
+    -- 2. Calculamos cuánto sería el límite máximo permitido (el sueldo viejo + un 4%)
+    -- Multiplicar por 1.04 es lo mismo que sumarle el 4%
+    SET v_limite_permitido = v_sueldo_anterior * 1.04;
+    
+    -- 3. Comprobamos si el nuevo salario (NEW.salary) se pasa del límite
+    IF NEW.salary > v_limite_permitido THEN
+        -- Si se pasa, lanzamos el error de MySQL (SQLSTATE '45000') y paramos el INSERT
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Error: El nuevo salario supera el límite del 4% respecto al anterior.';
+    END IF;
+    
+END $$
+DELIMITER ;
+
+
+INSERT INTO salaries (emp_no, salary, from_date, to_date)
+VALUES (10001, 120000, CURDATE(), '9999-01-01');
+
+
+
+/*SCRIPT 3:Crea un código que baje el salario un 40% a un trabajador dado su emp_no. Tu código debe asegurarse de 
+cerrar correctamente el registro del salario anterior y abrir un nuevo registro para el nuevo salario. PROCEDIMIENTO*
+*/
+DROP PROCEDURE IF EXISTS bajar_salario_empleado;
+DELIMITER $$
+CREATE PROCEDURE bajar_salario_empleado(
+    IN p_emp_no INT -- Recibimos el número del empleado como parámetro de entrada
+)
+BEGIN
+    DECLARE v_salario_actual INT;
+    DECLARE v_nuevo_salario INT;
+    
+    -- PASO 1: Averiguar el salario que tiene activo HOY y guardarlo
+    SELECT salary INTO v_salario_actual
+    FROM salaries
+    WHERE emp_no = p_emp_no 
+      AND to_date = '9999-01-01'; -- Filtramos por el salario vigente
+      
+    -- PASO 2: Calcular el nuevo salario restándole el 40%
+    -- Si le quitamos un 40%, significa que se queda cobrando el 60% (0.60) de lo que tenía
+    SET v_nuevo_salario = v_salario_actual * 0.60;
+    
+    -- PASO 3: Cerrar el salario anterior (Ponerle fecha de fin hoy mismo)
+    UPDATE salaries
+    SET to_date = CURDATE()
+    WHERE emp_no = p_emp_no 
+      AND to_date = '9999-01-01';
+      
+    -- PASO 4: Abrir el registro del salario nuevo (Empieza hoy y dura hasta el infinito)
+    INSERT INTO salaries (emp_no, salary, from_date, to_date)
+    VALUES (p_emp_no, v_nuevo_salario, CURDATE(), '9999-01-01');
+
+END $$
+DELIMITER ;
+-- MIRO EL SUELDO
+SELECT * FROM salaries WHERE emp_no = 10001;
+-- Aplico el castigo
+CALL bajar_salario_empleado(10001);
+-- Vuelvo a mirar el sueldo
+SELECT * FROM salaries WHERE emp_no = 10001;
+
+/*SCRIPT 4: Desarrolla un código que traslade a un gerente de dirigir un departamento a dirigir otro distinto. 
+Antes de hacer el cambio, verifica que el nuevo departamento no tenga un gerente asignado. PROCEDIMIENTO*/
+DROP PROCEDURE IF EXISTS trasladar_gerente;
+
+DELIMITER $$
+CREATE PROCEDURE trasladar_gerente(
+    IN p_emp_no INT,            -- El ID del mánager que vamos a mover
+    IN p_nuevo_dept_no CHAR(4)  -- El código del departamento al que va
+)
+BEGIN
+    DECLARE v_jefes_actuales INT;
+    
+    -- PASO 1: Control de seguridad (¿Está libre el nuevo departamento?)
+    -- Contamos cuántos mánagers activos ('9999-01-01') hay en el departamento de destino
+    SELECT COUNT(*) INTO v_jefes_actuales
+    FROM dept_manager
+    WHERE dept_no = p_nuevo_dept_no 
+      AND to_date = '9999-01-01';
+      
+    -- Si la cuenta es mayor que 0, significa que el despacho NO está libre
+    IF v_jefes_actuales > 0 THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Error: El departamento de destino ya tiene un gerente asignado y activo.';
+    ELSE
+        -- PASO 2: Si está libre, hacemos el traslado.
+        
+        -- A) Cerramos su cargo en el departamento viejo (ponemos fecha de fin hoy)
+        UPDATE dept_manager
+        SET to_date = CURDATE()
+        WHERE emp_no = p_emp_no 
+          AND to_date = '9999-01-01';
+          
+        -- B) Lo damos de alta en el nuevo departamento (empieza hoy y termina en '9999-01-01')
+        INSERT INTO dept_manager (emp_no, dept_no, from_date, to_date)
+        VALUES (p_emp_no, p_nuevo_dept_no, CURDATE(), '9999-01-01');
+        
+    END IF;
+
+END $$
+DELIMITER ;
+
+-- Probamos a meter un mánager en un departamento que ya tiene jefe activo
+CALL trasladar_gerente(10022, 'd001');
 
 
 
 
+
+
+/*SCRIPT 5: Crea un código que evite que un empleado tenga dos salarios superpuestos en salaries. 
+Si un nuevo salario se solapa en fechas con otro salario existente para el mismo empleado, muestra un mensaje de error. TRIGGER*/
+DROP TRIGGER IF EXISTS controlar_solapamiento_salarios;
+
+DELIMITER $$
+CREATE TRIGGER controlar_solapamiento_salarios
+BEFORE INSERT ON salaries
+FOR EACH ROW
+BEGIN
+    DECLARE v_coincidencias INT;
+    
+    -- Contamos cuántos salarios del mismo empleado se cruzan con las nuevas fechas
+    SELECT COUNT(*) INTO v_coincidencias
+    FROM salaries
+    WHERE emp_no = NEW.emp_no
+      AND NEW.from_date <= to_date   -- ¿El nuevo empieza antes de que termine alguno viejo?
+      AND NEW.to_date >= from_date;  -- ¿El nuevo termina después de que empiece alguno viejo?
+      
+    -- Si encontramos aunque sea una coincidencia, hay solapamiento y lanzamos el error
+    IF v_coincidencias > 0 THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Error: Las fechas de este nuevo salario se solapan con un registro existente.';
+    END IF;
+    
+END $$
+DELIMITER ;
+
+-- Intentamos meter un salario que se solapa en pleno año 1986
+INSERT INTO salaries (emp_no, salary, from_date, to_date)
+VALUES (10001, 95000, '1986-12-01', '1987-03-01');

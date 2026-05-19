@@ -33,9 +33,11 @@ id INT AUTO_INCREMENT PRIMARY KEY,
 name VARCHAR(50) NOT NULL,
 lastname VARCHAR(50) NOT NULL
 );
+
 Se debe implementar un trigger que registre los cambios de apellido de cada empleado, y la fecha cuando estos 
 se produjeron. Además, la tabla de employees no almacenará ningún cambio de apellidos si el nuevo apellido es 
 igual que el antiguo: en tal caso no se registrará nada.*/
+
 -- Limpiamos las tablas por si ya existían de ejecuciones anteriores
 -- 1. Borramos las tablas de la prueba por si acaso existían de antes
 DROP TABLE IF EXISTS boda_history;
@@ -92,7 +94,8 @@ SELECT * FROM boda_history;
 -- Lo volvemos a activar por seguridad
 SET SQL_SAFE_UPDATES = 1;
 
-/*EJERCICIO 3: Ya no me llamo así en el ejemplo anterior hemos registrado una auditoría de apellidos. Ahora vamos a crear un trigger que registre tanto cambios de nombre como de apellidos. Para ello, se propone la creación de una tabla como la que se expone a continuación:
+/*EJERCICIO 3: Ya no me llamo así en el ejemplo anterior hemos registrado una auditoría de apellidos. Ahora vamos a crear un trigger que registre tanto cambios de nombre 
+como de apellidos. Para ello, se propone la creación de una tabla como la que se expone a continuación:
 CREATE TABLE employees_audit (
 id INT AUTO_INCREMENT PRIMARY KEY,
 employeeNumber INT NOT NULL,
